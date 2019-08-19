@@ -1,0 +1,182 @@
+COURS INTRODUCTION
+
+9:00  	Introduction
+		- Présentation des participants
+		- Background : 
+			Assessment reports : MEA, IPCC, LivingPlanetReport, IPBES
+			Pereira et al. 2010
+				Définition de biodiversity scénarios
+				Description de l'étude (figure 1)
+				Metrics of change
+				Techniques de modélisation
+					Land-cover change
+					SDMs
+					Ecopath
+					Dose-response relationships
+					DGVMs
+				Species extinction
+					Fig2
+					Variation among scenarios: land and climate change; species ecology; differences in modelling approaches
+					Controversy : extinction debt, interactions between drivers
+				Conclusions
+				Decision making
+					"scenarios must move beyond illustrating the potential impacts of global
+						change on biodiversity toward more integrated
+						approaches that account for the feedbacks that
+						link environmental drivers, biodiversity, ecosystem
+						services, and socioeconomic dynamics."
+			
+			Humility : we are pretty bad at predicting local biodiversity changes (Vellend2013)
+		- Motivations
+		- Attentes du cours
+		- Objectifs
+		- Contenu
+		- Évaluation
+
+
+
+
+
+9:30 	Étude de cas : Thomas et al. 2004
+		- Question de base
+			Provide a first pass estimate of extinction probabilities associated with climate change scenarios for 2050. Estimate number of species that are "commited to extinction"
+		- Méthodologie
+			1 103 animal and plant species
+			Estimate current distribution area
+			Deux scénarios de dispersion
+			Three methods to estimate extinctio based on the SAR
+				method 1: changes in the summed distribution areas of all species
+				method 2: average proportional loss of the distribution area
+				method 3: considers the extinction risk of each species
+				IUCN red list
+		- Résultats principaux
+			Species-level with max climate change extinction to be 21-32% (range of three methods) with universal dispersal and 38-	52% for no dispersal
+			Projections vary with methods, organisms and areas of the world
+			COmparison with extinctions from habitat losses. Some areas have larger climate change impacts, others are driven by land use	
+		- Réactions ?
+		- Réponse de Thuiller : Two additional sources of uncertainty
+			- different SDMs. Differences may be as strong as between scenarios
+			- using the SARs. Link between area reduction and extinction risk is questionable
+			- conclusion : the range of extinction risks may even be wider than anticipated 
+		- Quelle utilisation faire des prédictions ?
+		- Comment faire différent 15 ans plus tard ?
+
+10:00	Discussion : quoi mettre dans un modèle ?
+		- Connolly
+			Definition of phenomenological model
+			E.g.
+			Definition of process based model
+			Discussion on the strength and weaknesses
+		- Urban
+			6 processes to model biodiversity
+			E.g. of failure because of not enough processes
+			E.g. of detailled models
+		- Purves
+			- description of Madingley
+			- E.g. of prediction
+			- one model for all ?
+			- uncertainty management ?
+
+10:30 	Pause
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+11:00	Présentation d'introduction
+		- Techniques de base de modélisation
+		- The modeling loop (Dietz 2018)		
+		- Incertitude : 
+			Paramétrisation
+				structure hiérarchique de la variabilité dans un modèle de survie d'un arbre (mesure, variabilité annuelle, processus, génétique, conditions locales, conditions de site)				
+			Propagation
+				exemple avec modèle déterministe vs stochastique de croissance
+			Structurelle
+				comparaison des scénarios IPBES
+		- Présentation du problème de la semaine 
+
+11:30	10 steps guide to ecological modeling
+
+			Precisely define the objective
+			Use theory to justify assumptions and manage complexity
+			Schematize the model
+			Make sure of mathematical rigor
+			Proper interpretation of the model, limits and uncertainty 
+			Debug the code AND the model
+			Code properly and for others
+			Keep a journal of model development and tests
+			Run virtual experiments
+			Model validation & updating
+			Have in mind illustration of the results
+
+
+			Modelling is a state of mind more than a technique. 
+
+
+
+A model is a logical machine for deducing the latter from the former. If the model is correct, then, if you believe its assumptions, you must, as a matter of logic, also believe its conclusions. (Gunawardena, 2014. BMC Biology)
+--> the whole is not necessarily the sum of the parts
+
+
+
+
+
+			Modèles phénoménologiques (e.g. SARs)
+			Équations différentielles 
+			Équations différentielles partielles
+			Équations de différence
+			Équations différentielles stochastiques
+			Chaines de Markov
+			Diffusion models
+			Metapopulation models
+			Leslie
+			IPM (e.g. )
+			Automates cellulaires (e.g. forest fire)
+			Modèles de flux (e.g. Ecopath)
+			Modèles individus centrés (e.g. range finder)
+			Forest gap models (e.g. SORTIE)
+			Réseaux trophiques (e.g. ATN)
+			DGVM
+			Modèle global d'écosystème (e.g. Madingley)
+			SDMs
+			Phenofit
+			Modèles d'extinction
+			Movement
+			Dose-response models
+
+
+
+
+
+10 steps guide to modelling
+ou 
+10 qualities for a good modeller
+
+
+Discussion en fin de journée sur la pratique de la modélisation ? 
+

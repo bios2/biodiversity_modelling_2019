@@ -1,0 +1,99 @@
+
+--- .transition
+
+# Case study
+
+---
+
+# Why Thomas et al. 2004 ?
+
+<div style='text-align:center;'>
+<img src="assets/img/thomas1.png" height="300px"></img>
+</div>
+
+---
+
+# Research objective 
+
+Provide a first pass estimate of extinction probabilities (species "commited to extinction") associated with climate change scenarios for 2050.
+
+---
+
+# Methods
+## Data
+
+- Queensland: mammals (11), birds (13), reptiles (18)
+- Australia: butterflies (24)
+- Mexico: mammals (96), birds (186) and butterflies (41)
+- South Africa: mammals (5), birds (5), reptiles (26) and butterflies (4)
+- Europe: birds (34)
+- Brazil : plants (163)
+- South Africa : protoaceae (243)
+- Europe : plants (192)
+- Amazon : plants (9)
+
+---
+
+# Methods
+## Species distribution models
+
+- BIOCLIM
+- GARP
+- PCA / climate matching
+- Locally wieghted regression
+- GAM 
+- IMAGE 2
+- Similarity model constrained by a rectilinear envelope
+
+---
+
+# Methods
+## Estimating species extinction
+
+Method 1 : $E_1 = 1 - (\sum A_{new}/\sum A_{original})^z$
+(overal change in area) 
+
+Method 2 : $E_2 = 1 - [(1/n)(\sum A_{new}/A_{original})^z]$
+(average proportional change in area)
+
+Method 3 : $E_3 = (1/n) \sum (1-A_{new}/\sum A_{original})^z$
+(specific change in area)
+
+---
+
+# Results
+
+<div style='text-align:center;'>
+<img src="assets/img/thomas2.png" height="500px"></img>
+</div>
+
+---
+
+# Conclusions
+
+- Projections vary with methods, organisms and areas of the world
+- Comparison with extinctions from habitat losses only reveals that some areas have larger climate change impacts, others are driven by land-use changes
+
+--- .transition
+
+# Reactions ?
+
+---
+
+# Commentary by Thuiller et al.
+## Two additional sources of uncertainty
+
+- Different SDMs
+- Link between area reduction and extinction risk is questionable
+
+<div style='text-align:center;'>
+<img src="assets/img/thuiller.png" height="300px"></img>
+</div>
+
+--- .transition
+
+# How far can we go with such scenarios ?
+
+--- .transition
+
+# What could we do, 15 years later ?

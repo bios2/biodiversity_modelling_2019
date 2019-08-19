@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day 1. Models overview</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Day 1. Models overview">
+  <meta name="author" content="Dominique Gravel">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="./libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/default.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="./libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="./libraries/frameworks/io2012/js/slides" 
+    src="./libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/logo.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Day 1. Models overview</h1>
+    <h2></h2>
+    <p>Dominique Gravel<br/>Laboratoire d'écologie intégrative</p>
+  </hgroup>
+  <article></article>
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <!--   <article data-timings="">
+    <p>--- .transition</p>
+
+<h1>Overview of biodiversity modeling techniques</h1>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-2" style="background:;">
+  <!--  <a href="#slide-2"></a> -->
+  <hgroup>
+    <h1>Objective</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Give an overview of the diversity of techniques and approaches</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h1>Phenomenological models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Reproduce empirical relationships using different statistical models</li>
+<li>Good at interpolation, bad at extrapolation</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/worm.png" width="450px"></img>
+Worm et al. 2006. Science.</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h1>Differential equations</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Continuous time</li>
+<li>Continuous variable</li>
+<li>Easy to analyze, with multiple tools</li>
+<li>Deterministic</li>
+<li>Often derived from theory</li>
+<li>May be hard to parameterize</li>
+<li>May be subject to numerical errors</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/IBT.png" width="450px"></img>
+MacArthur and Wilson. 1963. Evolution.</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h1>Partial differential equations</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Same as ODEs but with several dimensions</li>
+<li>Much harder to solve analytically and numerically</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/ppa.png" width="450px"></img>
+Strigul et al. 2008. Eco. Monogr.</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h1>Difference equations</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Similar to ODEs but discrete time</li>
+<li>Easier to fit to empirical data</li>
+<li>Easier to solve numerically</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/ricker.png" width="450px"></img></p>
+
+<p>\(N_{t+1}= aN_t e^{-N_t/K}\)</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h1>Markov chain</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Stochastic process</li>
+<li>Transition matrix</li>
+<li>Discrete time, discrete states</li>
+<li>No time lag</li>
+<li>Easy to fit to empirical data</li>
+<li>Several tools to analyze</li>
+<li>Traditional in forest ecology</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/brisson.png" width="500px"></img>
+Brisson et al. 1994. Ecoscience</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h1>Diffusion models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Partial differential equations</li>
+<li>Deterministic</li>
+<li>Random movement of particules (Brownian motion)</li>
+<li>Challenging analytically (but doable for some models)</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/skellam.png" width="450px"></img>
+Kellam. 1951. Ecology</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h1>Metapopulation</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Spatial dynamics in discrete patches</li>
+<li>Continuous/discrete time</li>
+<li>Can be conditional on the environment</li>
+<li>Well suited for empirical analysis</li>
+<li>Used for conservation of endangered populations and for conservation area planning</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/owl.jpg" width="450px"></img></p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h1>Epidemiology</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Similar structure to metapop</li>
+<li>SIR, SIRS etc...</li>
+<li>Counts infected individuals instead of virus particules</li>
+<li>Seasonal dynamics</li>
+<li>Parameterized from field data</li>
+<li>Applied to forest ecosystems</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/keeling.png" width="350px"></img>
+Keeling et al. 2001. Science. </p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h1>Leslie matrices</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Structured populations</li>
+<li>Transition among discrete states</li>
+<li>Deal with rates and probabilities </li>
+<li>Density dependence</li>
+<li>Used to evaluate intrinsic growth rate and run PVA</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/leslie.png" width="450px"></img></p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h1>Integro projection models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Continuous version of the Leslie matrix</li>
+<li>Explicitly consider variability among transitions with a kernel</li>
+<li>Developed for data analysis</li>
+<li>May be technically challenging</li>
+<li>Hard to introduce feedbacks</li>
+<li>May include evolutionary dynamics</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/IPM.jpg" width="450px"></img></p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h1>Cellular automaton</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Simplest spatial model</li>
+<li>Simulation based only</li>
+<li>Self-organization</li>
+<li>Could be deterministic or stochastic</li>
+<li>Easy to couple with other types of models</li>
+<li>Mean-field behaviour can be approximated with differential equations</li>
+<li>Turing complete (can perform any calculation that any other programmable computer can)!</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/CA.png" width="450px"></img></p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-14" style="background:;">
+  <!--  <a href="#slide-14"></a> -->
+  <hgroup>
+    <h1>Cellular automaton</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/CA2.png" width="950px"></img>
+Jonathan McCabe
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h1>Ecosystem fluxes</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Tradition in ecosystem ecology</li>
+<li>Ecopath developed for fisheries</li>
+<li>Usually static, can be transformed into ODEs</li>
+<li>Heavy to parameterize</li>
+<li>Often approximated with allometries</li>
+<li>Problem of balancing fluxes</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/legagneux.jpg" width="450px"></img>
+Legagneux et al. 2012. Ecology</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h1>Individual based models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Infinite possibilities</li>
+<li>Realistic but hardly tractable</li>
+<li>Heavy parameterization</li>
+<li>Error propagation</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/range_shifter.jpg" width="450px"></img>
+Bocedi et al. 2014. Meth. Ecol. Evol.</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h1>Forest gap models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Realistic for uneven age forests</li>
+<li>Rich evolutionary history</li>
+<li>Based on succession or individual tree performance</li>
+<li>Heavy parameterization, often obscur </li>
+<li>Some are spatially explicit</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/sortie.png" width="450px"></img>
+Beaudet et al. 2002. For. Ecol. Manag. </p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h1>Food web models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Often using ODEs</li>
+<li>Size-based parameterization</li>
+<li>None is validated at the food web level</li>
+<li>Recent addition of temperature dependence</li>
+<li>Used mostly for theory</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/foodweb.png" width="450px"></img>
+Cohen et al. 2003. PNAS</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h1>Dynamic Global Vegetation Model</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>First principles in plant physiology, biochemistry and hydrology</li>
+<li>For very large areas (regions to continents)</li>
+<li>Incorporated into dynamic climate-vegetation modeling</li>
+<li>Plant functional groups</li>
+<li>No range dynamics</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/dgvm.png" width="450px"></img>
+Moorcroft et al. 2001. Eco. Monogr.</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h1>Global Ecosystem Model</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Madingley</li>
+<li>First principles for autotrophs and heterotrophs</li>
+<li>Marine &amp; terrestrial</li>
+<li>Trophic interactions</li>
+<li>Temperature</li>
+<li>Spatial movement</li>
+<li>Monthly time resolution</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/harfoot2.png" width="450px"></img>
+Harfoot et al. 2014. PLOS Biol. </p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h1>Species Distribution Models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Easy to apply &amp; very popular</li>
+<li>Various statistical methods</li>
+<li>Handle different types of data</li>
+<li>Can account for spatial autocorrelation</li>
+<li>Several limitations</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/mckenney.png" width="450px"></img>
+McKenney et al. 2007. Bioscience.</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h1>Phenological models</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Hypothesis that phenology constrains ranges</li>
+<li>Developed for trees</li>
+<li>Successful and better at extrapolation than SDMs</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/phenofit.png" width="350px"></img>
+Chuine &amp; Beaubien. 2001. Ecol. Lett. </p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h1>Species extinction</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Based on point pattern process</li>
+<li>Inferrence of extinction date</li>
+<li>Use observation data</li>
+<li>Account for various data quality</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/woodpecker.png" width="400px"></img>
+Gotelli et al. 2012. Cons. Biol.</p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-24" style="background:;">
+  <!--  <a href="#slide-24"></a> -->
+  <hgroup>
+    <h1>Other types</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Species Area Relationship (SAR)</li>
+<li>Species Abundance Distribution (SAD)</li>
+<li>Animal movement</li>
+<li>Dose-response</li>
+<li>[...]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="transition" id="slide-25" style="background:;">
+  <!--  <a href="#slide-25"></a> -->
+  <hgroup>
+    <h1>How to pick the appropriate approach ?</h1>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-26" style="background:;">
+  <!--  <a href="#slide-26"></a> -->
+  <hgroup>
+    <h1>Ten-steps guide to ecological modeling</h1>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-27" style="background:;">
+  <!--  <a href="#slide-27"></a> -->
+  <hgroup>
+    <h1>Example</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/talluto1.png" width="750px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-28" style="background:;">
+  <!--  <a href="#slide-28"></a> -->
+  <hgroup>
+    <h1>1. Precisely define the objectives &amp; needs</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Solve some of the limitations of SDMs (dispersal limitations, demography,  distribution in equilibrium with current climate)</li>
+<li>Evaluate the model with data</li>
+<li>Test some intuition about the drivers of species ranges</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-29" style="background:;">
+  <!--  <a href="#slide-29"></a> -->
+  <hgroup>
+    <h1>2. Use theory to justify assumptions and manage complexity</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/talluto2.png" width="750px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-30" style="background:;">
+  <!--  <a href="#slide-30"></a> -->
+  <hgroup>
+    <h1>3. Make sure of mathematical rigor</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Standard metapopluation theory : </p>
+
+<p>\(\frac{dp(E)}{dt}=c(E)p(E)(1-p(e)) - e(E)p(E)\)</p>
+
+<p>But tree demography in temperate forests is seasonal. </p>
+
+<p>Tranformed the model into two states markov chain. </p>
+
+<p>Often, the problem is lack of or inappropriate units.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-31" style="background:;">
+  <!--  <a href="#slide-31"></a> -->
+  <hgroup>
+    <h1>4. Proper interpretation of the model, limits and uncertainty</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Bayesian analysis to fully document uncertainty in parameter estimates</li>
+<li>Posterior distribution of range maps to investigate error propagation</li>
+<li>Use theoretical tools to support the interpretation</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-32" style="background:;">
+  <!--  <a href="#slide-32"></a> -->
+  <hgroup>
+    <h1>5. Debug the code AND the model</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Simplicity of the theoretical model made it easy to solve</li>
+<li>Challenges with the bayesian implementation (JAGS, Stan, custom sampler in C++)</li>
+<li>Often the codes work, but it does not yields appropriate results</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h1>6. Code properly and for others</h1>
+  </hgroup>
+  <article>
+    
+    <div class='left' style='float:left;width:48%'>
+     <ul>
+<li>Group of 4 working on parameterization</li>
+<li>All were trained with system version control</li>
+<li>Hundreds of parameter files exchanged</li>
+<li>At the end, not sure if model was parameterized with 1 or 5 yr time steps ...</li>
+</ul>
+
+    </div>
+    <div class='right' style='float:right;width:48%'>
+     <p><img src="assets/img/github.png" width="550px"></img></p>
+
+    </div>
+  </article>
+</slide>
+<slide class="" id="slide-34" style="background:;">
+  <!--  <a href="#slide-34"></a> -->
+  <hgroup>
+    <h1>7. Keep a journal of model development and tests</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Standard practice in biology labs to have a log book</li>
+<li>Tools to do it with code</li>
+<li>Comment, comment and comment ....</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-35" style="background:;">
+  <!--  <a href="#slide-35"></a> -->
+  <hgroup>
+    <h1>8. Run virtual experiments</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/vissault.png" width="450px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-36" style="background:;">
+  <!--  <a href="#slide-36"></a> -->
+  <hgroup>
+    <h1>9. Model validation &amp; updating</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><em>In Global Change Biology, we generally like to see modelling studies to be supported by strong tests against observed data. Otherwise, we are left with the concern that model results may be just modelling artifacts that may not correspond to reality. In particular, your claim is hard to accept that species movements will be restricted to a few hundred meters over 100 years through dispersal limitations. While the other extreme of unlimited dispersal is clearly also not correct, the true movement of species will probably lie between these extremes as studies of changes in species distributions over recent times have confirmed.</em>  </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-37" style="background:;">
+  <!--  <a href="#slide-37"></a> -->
+  <hgroup>
+    <h1>10. Have in mind illustration of the results</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/drawing.jpg" width="650px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-38" style="background:;">
+  <!--  <a href="#slide-38"></a> -->
+  <hgroup>
+    <h1>Uncertainty</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Parameters</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/clark.png" width="325px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-39" style="background:;">
+  <!--  <a href="#slide-39"></a> -->
+  <hgroup>
+    <h1>Uncertainty</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Error propagation</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/lyapunov.png" width="550px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-40" style="background:;">
+  <!--  <a href="#slide-40"></a> -->
+  <hgroup>
+    <h1>Uncertainty</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Structural</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/ipcc.jpg" width="650px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-41" style="background:;">
+  <!--  <a href="#slide-41"></a> -->
+  <hgroup>
+    <h1>How to control for uncertainty</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>The modeling loop</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/dietze.png" width="850px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Objective'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Phenomenological models'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Differential equations'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Partial differential equations'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Difference equations'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Markov chain'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Diffusion models'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Metapopulation'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Epidemiology'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Leslie matrices'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Integro projection models'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Cellular automaton'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Cellular automaton'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Ecosystem fluxes'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Individual based models'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Forest gap models'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Food web models'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Dynamic Global Vegetation Model'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Global Ecosystem Model'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Species Distribution Models'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Phenological models'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Species extinction'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Other types'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='How to pick the appropriate approach ?'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Ten-steps guide to ecological modeling'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Example'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='1. Precisely define the objectives &amp; needs'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='2. Use theory to justify assumptions and manage complexity'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='3. Make sure of mathematical rigor'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='4. Proper interpretation of the model, limits and uncertainty'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='5. Debug the code AND the model'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='6. Code properly and for others'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='7. Keep a journal of model development and tests'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='8. Run virtual experiments'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='9. Model validation &amp; updating'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='10. Have in mind illustration of the results'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='Uncertainty'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='Uncertainty'>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title='Uncertainty'>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title='How to control for uncertainty'>
+         41
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="./libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="./libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

@@ -1,0 +1,70 @@
+
+--- .transition
+
+# What to put into biodiversity models ?
+
+--- 
+
+# Connolly et al. 2017
+## Phenomenological models : statistical models to reproduce empirical relationships 
+
+<div style='text-align:center;'>
+<img src="assets/img/mckenney.png" height="400px"></img>
+</div>
+
+--- 
+
+# Connolly et al. 2017
+## Process-based models : models that characterize changes in a system’s state as explicit functions of the events that drive those state changes
+
+<div style='text-align:center;'>
+<img src="assets/img/talluto2.png" height="350px"></img>
+</div>
+
+--- 
+
+# Connolly et al. 2017
+## Mechanistic models : a characterization of the state of a system as explicit functions of component parts and their associated actions and interactions
+
+<div style='text-align:center;'>
+<img src="assets/img/sortie.png" height="350px"></img>
+</div>
+
+--- 
+
+# Urban et al. 2016
+## Elements to include
+
+<div style='text-align:center;'>
+<img src="assets/img/urban.png" height="450px"></img>
+</div>
+
+--- 
+
+# Urban et al. 2016
+## Failure to include processes
+
+<div style='text-align:center;'>
+<img src="assets/img/vissault.png" height="450px"></img>
+</div>
+
+--- 
+
+# Urban et al. 2016
+## Too many processes ?
+
+--- 
+
+# Global Ecosystem models
+
+<div style='text-align:center;'>
+<img src="assets/img/purves.png" height="500px"></img>
+</div>
+
+--- 
+
+# Global Ecosystem models
+
+<div style='text-align:center;'>
+<img src="assets/img/harfoot1.png" height="450px"></img>
+</div>

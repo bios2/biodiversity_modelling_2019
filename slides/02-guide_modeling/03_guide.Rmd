@@ -1,0 +1,147 @@
+
+---.transition 
+
+# How to pick the appropriate approach ?
+
+---
+
+# Ten-steps guide to ecological modeling
+
+---
+
+# Example
+
+<div style='text-align:center;'>
+<img src="assets/img/talluto1.png" width="750px"></img>
+</div>
+
+---
+
+# 1. Precisely define the objectives & needs
+
+- Solve some of the limitations of SDMs (dispersal limitations, demography,  distribution in equilibrium with current climate)
+- Evaluate the model with data
+- Test some intuition about the drivers of species ranges
+
+---
+
+# 2. Use theory to justify assumptions and manage complexity
+
+<div style='text-align:center;'>
+<img src="assets/img/talluto2.png" width="750px"></img>
+</div>
+
+---
+
+# 3. Make sure of mathematical rigor
+
+Standard metapopluation theory : 
+
+$\frac{dp(E)}{dt}=c(E)p(E)(1-p(e)) - e(E)p(E)$
+
+But tree demography in temperate forests is seasonal. 
+
+Tranformed the model into two states markov chain. 
+
+Often, the problem is lack of or inappropriate units.
+
+---
+
+# 4. Proper interpretation of the model, limits and uncertainty 
+
+- Bayesian analysis to fully document uncertainty in parameter estimates
+- Posterior distribution of range maps to investigate error propagation
+- Use theoretical tools to support the interpretation
+
+---
+
+# 5. Debug the code AND the model
+
+- Simplicity of the theoretical model made it easy to solve
+- Challenges with the bayesian implementation (JAGS, Stan, custom sampler in C++)
+- Often the codes work, but it does not yields appropriate results
+
+--- &twocol 
+
+# 6. Code properly and for others
+
+*** =left
+
+- Group of 4 working on parameterization
+- All were trained with system version control
+- Hundreds of parameter files exchanged
+- At the end, not sure if model was parameterized with 1 or 5 yr time steps ...
+
+*** =right
+
+<img src="assets/img/github.png" width="550px"></img>
+
+---
+
+# 7. Keep a journal of model development and tests
+
+- Standard practice in biology labs to have a log book
+- Tools to do it with code
+- Comment, comment and comment ....
+
+---
+
+# 8. Run virtual experiments
+
+<div style='text-align:center;'>
+<img src="assets/img/vissault.png" width="450px"></img>
+</div>
+
+---
+
+# 9. Model validation & updating
+
+*In Global Change Biology, we generally like to see modelling studies to be supported by strong tests against observed data. Otherwise, we are left with the concern that model results may be just modelling artifacts that may not correspond to reality. In particular, your claim is hard to accept that species movements will be restricted to a few hundred meters over 100 years through dispersal limitations. While the other extreme of unlimited dispersal is clearly also not correct, the true movement of species will probably lie between these extremes as studies of changes in species distributions over recent times have confirmed.*  
+
+---
+
+# 10. Have in mind illustration of the results
+
+<div style='text-align:center;'>
+<img src="assets/img/drawing.jpg" width="650px"></img>
+</div>
+
+--- 
+
+# Uncertainty
+
+## Parameters
+
+<div style='text-align:center;'>
+<img src="assets/img/clark.png" width="325px"></img>
+</div>
+
+--- 
+
+# Uncertainty
+
+## Error propagation
+
+<div style='text-align:center;'>
+<img src="assets/img/lyapunov.png" width="550px"></img>
+</div>
+
+--- 
+
+# Uncertainty
+
+## Structural
+
+<div style='text-align:center;'>
+<img src="assets/img/ipcc.jpg" width="650px"></img>
+</div>
+
+--- 
+
+# How to control for uncertainty
+
+## The modeling loop
+
+<div style='text-align:center;'>
+<img src="assets/img/dietze.png" width="850px"></img>
+</div>
