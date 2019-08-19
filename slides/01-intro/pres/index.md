@@ -1,5 +1,6 @@
 ---
 title       : "Day 1. Introduction to biodiversity modeling"
+subtitle    : "https://github.com/bios2/biodiversity_modelling_2019.git"
 author      : "Dominique Gravel"
 job         : "Laboratoire d'écologie intégrative"
 logo        : "logo.png"
