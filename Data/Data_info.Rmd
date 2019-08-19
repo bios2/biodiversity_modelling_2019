@@ -1,0 +1,215 @@
+---
+title: "Data"
+author: "Biodiversity modelling"
+date: "F.G. Blanchet -- August 19--23, 2019"
+output: pdf_document
+fontsize: 11pt
+classoption: letterpaper
+urlcolor: blue
+---
+
+```{r global_options,include=FALSE}
+knitr::opts_chunk$set(eval=TRUE)
+```
+
+# General information about the data
+
+All the data used for this course was gather for the region in grey in Figure 1.
+
+```{r, echo = FALSE, fig.height= 2, fig.width=2, fig.cap = "The region in grey is where the data was gathered for the course."}
+library(sp)
+
+# Load data
+region <- readRDS("region.RDS")
+
+par(mar=c(0,0,0,0))
+plot(region, col = "grey")
+```
+
+It is **important** to note that the data used for this course was organized for a pedagogical rather than for a scientific use. For example, some of the species were discarded because they were too rare or certain climate scenarios were not considered because accounting for all of them results in too much data to handle in a practical manner. 
+
+# Type of data
+## Biological data
+
+`birdAll.RDS` - The occurrence of the 289 most common bird species was assembled for this region. This file contains a `RasterStack` object (more details on rasters is given in the section *Data format*).
+
+`bird5.RDS` - The specific coordinates of where five species were gathered. This data is presented as a list of `SpatialPoints` (more details on list and SpatialPoints is given in the section *Data format*).
+
+## Climate
+
+### Present climatic data
+
+`climate_Present.RDS` - 19 bioclimatic variables calculated across the survey region for the present. This file contains a `RasterStack` object (more details on rasters is given in the section *Data format*). The meaning of each bioclimatic variable is as follow:
+
+1. Annual Mean Temperature
+2. Mean Diurnal Range (Mean of monthly (max temp - min temp))
+3. Isothermality (BIO2/BIO7) (* 100)
+4. Temperature Seasonality (standard deviation *100)
+5. Max Temperature of Warmest Month
+6. Min Temperature of Coldest Month
+7. Temperature Annual Range (BIO5-BIO6)
+8. Mean Temperature of Wettest Quarter
+9. Mean Temperature of Driest Quarter
+10. Mean Temperature of Warmest Quarter
+11. Mean Temperature of Coldest Quarter
+12. Annual Precipitation
+13. Precipitation of Wettest Month
+14. Precipitation of Driest Month
+15. Precipitation Seasonality (Coefficient of Variation)
+16. Precipitation of Wettest Quarter
+17. Precipitation of Driest Quarter
+18. Precipitation of Warmest Quarter
+19. Precipitation of Coldest Quarter
+
+### Future climatic data
+
+The same 19 bioclimatic variables were constructed across the survey region for 2030, 2045, 2060, 2075 and 2090. There are numerous ways to predict the climate and as such, many different scenarios have been proposed. For this course, three scenarios will be made available.
+
+1. CMCC - CM: Centro Euro-Mediterraneo per I Cambiamenti Climatici
+  - `climate_Scenario_CMCC_CM_2030.RDS`
+  - `climate_Scenario_CMCC_CM_2045.RDS`
+  - `climate_Scenario_CMCC_CM_2060.RDS`
+  - `climate_Scenario_CMCC_CM_2075.RDS`
+  - `climate_Scenario_CMCC_CM_2090.RDS`
+2. MIROC5: Atmosphere and Ocean Research Institute (The University of Tokyo), National Institute for Environmental Studies, and Japan Agency for Marine-Earth Science and Technology
+  - `climate_Scenario_MIROC5_2030.RDS`
+  - `climate_Scenario_MIROC5_2045.RDS`
+  - `climate_Scenario_MIROC5_2060.RDS`
+  - `climate_Scenario_MIROC5_2075.RDS`
+  - `climate_Scenario_MIROC5_2090.RDS`
+3. MRI - CGCM3:   Meteorological Research Institute
+  - `climate_Scenario_MRI_CGCM3_2030.RDS`
+  - `climate_Scenario_MRI_CGCM3_2045.RDS`
+  - `climate_Scenario_MRI_CGCM3_2060.RDS`
+  - `climate_Scenario_MRI_CGCM3_2075.RDS`
+  - `climate_Scenario_MRI_CGCM3_2090.RDS`
+
+Each of these file contain the predicted 19 bioclimatic variables in a `RasterStack` object (more details on rasters is given in the section *Data format*).
+
+## Major roads
+
+`road_Distance.RDS` - The distance to major roads was constructed for the survey region. This information is available in a  `RasterLayer` object (more details on rasters is given in the section *Data format*).
+
+# Opening the data in R
+
+All data files are ".RDS" files. These files can be read into R with the `readRDS` function
+
+```{r, echo = FALSE}
+bird <- readRDS("./Bird/birdAll.RDS")
+```
+
+```{r, eval = FALSE}
+bird <- readRDS("birdAll.RDS")
+```
+
+# Data format
+
+To access the data in the file, it is important to first load the `raster` R packages
+
+```{r}
+library(raster)
+```
+
+These two R packages enable easier access to the particularities of the data, which have a structure designed to account for the spatial component they represent.
+
+## `list` of `SpatialPoints`
+
+In R a list is a composed of a series of section with potentially different data structure in it. 
+
+```{r, echo = FALSE}
+bird5 <- readRDS("./Bird/bird5.RDS")
+```
+
+```{r, eval = FALSE}
+bird5 <- readRDS("bird5.RDS")
+```
+
+If we access the `bird5` data read in R above, we see that it has 5 sections, one for each species. Each species is a `SpatialPoints`. 
+
+There are two ways to access a section of the list
+
+```{r}
+bird5[[1]]
+```
+
+or
+
+```{r}
+bird5$Corvus.brachyrhynchos
+```
+
+The printted output of a `SpatialPoints` gives use some basic information about what is in it. 
+
+To access the coordinates, we have to type
+
+```{r}
+xy <- coordinates(bird5$Corvus.brachyrhynchos)
+head(xy)
+```
+
+## Raster
+
+All files other than `bird5.RDS` includes rasters. In R, there are different types of rasters, `RasterLayer` and `RasterStack` are two of the ones we will have to deal with in this course.
+
+### `RasterLayer`
+
+The `road_Distance.RDS` files contains a `RasterLayer`
+
+```{r, echo = FALSE}
+road <- readRDS("Road/road_Distance.RDS")
+```
+
+```{r, eval = FALSE}
+road <- readRDS("road_Distance.RDS")
+```
+
+If we access it, what is printed on screen is a summary of what is available in this object
+
+```{r}
+road
+```
+#### Extracting data from a `RasterLayer`
+
+```{r}
+roadDist <- values(road)
+head(roadDist)
+```
+
+Note that each value is associated to a pixel. If you need the coordinate of a pixel, you have to type:
+
+```{r}
+roadxy <- coordinates(road)
+head(roadxy)
+```
+
+
+
+### `RasterStack`
+
+A `RasterStack` is nothing more than a group of `RasterLayer` stacked on each other.
+
+```{r, echo = FALSE}
+bird <- readRDS("./Bird/birdAll.RDS")
+```
+
+```{r, eval = FALSE}
+bird <- readRDS("birdAll.RDS")
+```
+
+```{r}
+bird
+```
+
+#### Extracting data from a `RasterStack`
+
+```{r}
+birdVal <- values(bird)
+birdVal[1:5,1:5]
+```
+
+Note that each value is associated to a pixel. If you need the coordinate of a pixel, you have to type:
+
+```{r}
+birdxy <- coordinates(bird)
+head(birdxy)
+```
