@@ -73,7 +73,7 @@ These approach are all theoretically sound but they are not well adapted to deal
 ### Account for sampling biais and sampling error
 - Hierarchical models
 
-### Account for many different aspects...
+### Account for many other different aspects...
 - Joint species distribution model (but we will get to that tomorrow)
 
 --- .transition

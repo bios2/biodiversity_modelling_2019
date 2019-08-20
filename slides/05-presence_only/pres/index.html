@@ -77,14 +77,14 @@
     <h4>Envelope model</h4>
 
 <ul>
-<li>BIOCLIM (Busby 1991)</li>
+<li>BIOCLIM</li>
 </ul>
 
 <h4>Distance model</h4>
 
 <ul>
-<li>DOMAIN (Carpenter et al. 1993)</li>
-<li>LIVES (Elith et al. 2006)</li>
+<li>DOMAIN</li>
+<li>LIVES</li>
 </ul>
 
 <p>These three approaches have been shown to perform overall poorly by Elith et al. (2006)</p>
@@ -100,16 +100,16 @@
     <h1>Technique to model presence-only data</h1>
   </hgroup>
   <article data-timings="">
-    <h4>Point process models (Illian et al. 2008)</h4>
+    <h4>Point process models</h4>
 
 <ul>
-<li>MAXENT (Phillips et al. 2006)</li>
-<li>Resource selection functions (McDonald et al. 2013 for a review)</li>
+<li>MAXENT</li>
+<li>Resource selection functions</li>
 <li>Poisson regression model</li>
 <li>Point process models</li>
 </ul>
 
-<p>MAXENT, Resource selection functions and poisson regression models have been shown to be the proportionally equivalent (Renner and Warton 2013, Warton and Aarts 2013) and thus related to Point process model.</p>
+<p>MAXENT, Resource selection functions and poisson regression models have been shown to be the proportionally equivalent and thus related to Point process model.</p>
 
 <p>In this section part we will focus on point process model. Specifically, we will go over the work of Renner et al. (2015).</p>
 
@@ -195,8 +195,6 @@
 <div style='text-align:center;'>
 <img src="assets/img/presence_only/Ripley_k_illustration.png" height="320px"></img>
 </div>
-
-<p>In R it can be calculated using the <code>Kest</code> function in <code>spatstat</code> package.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -457,22 +455,6 @@ Wrong. There are a number of problem with this procedure.</p>
     <h1>Gibbs point process</h1>
   </hgroup>
   <article data-timings="">
-    <h2>The Gibbs point process model</h2>
-
-<p>\[\ln \lambda(s) = \mathbf{x}(s)^T\beta + t_s(\mathbf{s}_P)\theta\]
-\(t_s(\mathbf{s}_P)\) - The area of a disc of radius \(r\) centred at location \(s\) that does not intersect with similar discs centred around each of the presence points \(\mathbf{s}_P\) .</p>
-
-<p>\(\theta\) - Interaction parameter (if positive, the points are clustered)</p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-<slide class="" id="slide-20" style="background:;">
-  <!--  <a href="#slide-20"></a> -->
-  <hgroup>
-    <h1>Gibbs point process</h1>
-  </hgroup>
-  <article data-timings="">
     <h2>The area-interaction processes models</h2>
 
 <ul>
@@ -494,8 +476,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-21" style="background:;">
-  <!--  <a href="#slide-21"></a> -->
+<slide class="" id="slide-20" style="background:;">
+  <!--  <a href="#slide-20"></a> -->
   <hgroup>
     <h1>Spatial log-Gaussian Cox process</h1>
   </hgroup>
@@ -512,8 +494,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-22" style="background:;">
-  <!--  <a href="#slide-22"></a> -->
+<slide class="" id="slide-21" style="background:;">
+  <!--  <a href="#slide-21"></a> -->
   <hgroup>
     <h1>Spatial log-Gaussian Cox process</h1>
   </hgroup>
@@ -535,8 +517,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-23" style="background:;">
-  <!--  <a href="#slide-23"></a> -->
+<slide class="" id="slide-22" style="background:;">
+  <!--  <a href="#slide-22"></a> -->
   <hgroup>
     <h1>Spatial log-Gaussian Cox process</h1>
   </hgroup>
@@ -561,8 +543,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-24" style="background:;">
-  <!--  <a href="#slide-24"></a> -->
+<slide class="" id="slide-23" style="background:;">
+  <!--  <a href="#slide-23"></a> -->
   <hgroup>
     <h1>Using presence-only data to map a species</h1>
   </hgroup>
@@ -576,8 +558,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-25" style="background:;">
-  <!--  <a href="#slide-25"></a> -->
+<slide class="" id="slide-24" style="background:;">
+  <!--  <a href="#slide-24"></a> -->
   <hgroup>
     <h1>Using presence-only data to map a species</h1>
   </hgroup>
@@ -600,8 +582,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-26" style="background:;">
-  <!--  <a href="#slide-26"></a> -->
+<slide class="" id="slide-25" style="background:;">
+  <!--  <a href="#slide-25"></a> -->
   <hgroup>
     <h1>Using presence-only data to map a species</h1>
   </hgroup>
@@ -628,8 +610,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-27" style="background:;">
-  <!--  <a href="#slide-27"></a> -->
+<slide class="" id="slide-26" style="background:;">
+  <!--  <a href="#slide-26"></a> -->
   <hgroup>
     <h1>Using presence-only data to map a species</h1>
   </hgroup>
@@ -649,8 +631,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-28" style="background:;">
-  <!--  <a href="#slide-28"></a> -->
+<slide class="" id="slide-27" style="background:;">
+  <!--  <a href="#slide-27"></a> -->
   <hgroup>
     <h1>Using presence-only data to map a species</h1>
   </hgroup>
@@ -676,13 +658,13 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-29" style="background:;">
-  <!--  <a href="#slide-29"></a> -->
+<slide class="" id="slide-28" style="background:;">
+  <!--  <a href="#slide-28"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
   <article data-timings="">
-    <p>To understand how to deal with absences, we have to first learn about how point process model are estsimated</p>
+    <p>To understand how to deal with absences, we have to first learn about how point process model are estimated</p>
 
 <h4>Log-likelihood function of a Poisson point process model</h4>
 
@@ -699,8 +681,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-30" style="background:;">
-  <!--  <a href="#slide-30"></a> -->
+<slide class="" id="slide-29" style="background:;">
+  <!--  <a href="#slide-29"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -713,15 +695,15 @@ Wrong. There are a number of problem with this procedure.</p>
 
 <h3><font color = "red">Problem</font></h3>
 
-<p>This likelihood function cannot be solve because the integral does not have closed form</p>
+<p>This likelihood function cannot be solve because the integral does not have a closed form</p>
 
 <p>It has to be approximated numerically. In mathematical terms this is known as <font color = "blue">quadrature</font>.</p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-31" style="background:;">
-  <!--  <a href="#slide-31"></a> -->
+<slide class="" id="slide-30" style="background:;">
+  <!--  <a href="#slide-30"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -745,8 +727,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-32" style="background:;">
-  <!--  <a href="#slide-32"></a> -->
+<slide class="" id="slide-31" style="background:;">
+  <!--  <a href="#slide-31"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -767,8 +749,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-33" style="background:;">
-  <!--  <a href="#slide-33"></a> -->
+<slide class="" id="slide-32" style="background:;">
+  <!--  <a href="#slide-32"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -789,8 +771,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-34" style="background:;">
-  <!--  <a href="#slide-34"></a> -->
+<slide class="" id="slide-33" style="background:;">
+  <!--  <a href="#slide-33"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -814,8 +796,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-35" style="background:;">
-  <!--  <a href="#slide-35"></a> -->
+<slide class="" id="slide-34" style="background:;">
+  <!--  <a href="#slide-34"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -838,8 +820,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-36" style="background:;">
-  <!--  <a href="#slide-36"></a> -->
+<slide class="" id="slide-35" style="background:;">
+  <!--  <a href="#slide-35"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -855,8 +837,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-37" style="background:;">
-  <!--  <a href="#slide-37"></a> -->
+<slide class="" id="slide-36" style="background:;">
+  <!--  <a href="#slide-36"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -881,8 +863,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-38" style="background:;">
-  <!--  <a href="#slide-38"></a> -->
+<slide class="" id="slide-37" style="background:;">
+  <!--  <a href="#slide-37"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -900,8 +882,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-39" style="background:;">
-  <!--  <a href="#slide-39"></a> -->
+<slide class="" id="slide-38" style="background:;">
+  <!--  <a href="#slide-38"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -923,8 +905,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-40" style="background:;">
-  <!--  <a href="#slide-40"></a> -->
+<slide class="" id="slide-39" style="background:;">
+  <!--  <a href="#slide-39"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -942,8 +924,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-41" style="background:;">
-  <!--  <a href="#slide-41"></a> -->
+<slide class="" id="slide-40" style="background:;">
+  <!--  <a href="#slide-40"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -965,8 +947,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-42" style="background:;">
-  <!--  <a href="#slide-42"></a> -->
+<slide class="" id="slide-41" style="background:;">
+  <!--  <a href="#slide-41"></a> -->
   <hgroup>
     <h1>Dealing with absences</h1>
   </hgroup>
@@ -989,8 +971,8 @@ Wrong. There are a number of problem with this procedure.</p>
   </article>
   <!-- Presenter Notes -->
 </slide>
-<slide class="" id="slide-43" style="background:;">
-  <!--  <a href="#slide-43"></a> -->
+<slide class="" id="slide-42" style="background:;">
+  <!--  <a href="#slide-42"></a> -->
   <hgroup>
     <h1>General guidelines about point process models</h1>
   </hgroup>
@@ -1133,7 +1115,7 @@ Wrong. There are a number of problem with this procedure.</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title='Gibbs point process'>
+        data-slide=20 title='Spatial log-Gaussian Cox process'>
          20
       </a>
     </li>
@@ -1151,7 +1133,7 @@ Wrong. There are a number of problem with this procedure.</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title='Spatial log-Gaussian Cox process'>
+        data-slide=23 title='Using presence-only data to map a species'>
          23
       </a>
     </li>
@@ -1181,7 +1163,7 @@ Wrong. There are a number of problem with this procedure.</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=28 title='Using presence-only data to map a species'>
+        data-slide=28 title='Dealing with absences'>
          28
       </a>
     </li>
@@ -1265,14 +1247,8 @@ Wrong. There are a number of problem with this procedure.</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=42 title='Dealing with absences'>
+        data-slide=42 title='General guidelines about point process models'>
          42
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=43 title='General guidelines about point process models'>
-         43
       </a>
     </li>
   </ul>

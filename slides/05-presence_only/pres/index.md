@@ -32,11 +32,11 @@ The species data we have access to when dealing with presence-only data are coor
 # Technique to model presence-only data
 
 #### Envelope model
-- BIOCLIM (Busby 1991)
+- BIOCLIM
 
 #### Distance model
-- DOMAIN (Carpenter et al. 1993)
-- LIVES (Elith et al. 2006)
+- DOMAIN
+- LIVES
 
 These three approaches have been shown to perform overall poorly by Elith et al. (2006)
 
@@ -46,13 +46,13 @@ We will not discuss more about these approach in the course.
 
 # Technique to model presence-only data
 
-#### Point process models (Illian et al. 2008)
-- MAXENT (Phillips et al. 2006)
-- Resource selection functions (McDonald et al. 2013 for a review)
+#### Point process models
+- MAXENT
+- Resource selection functions
 - Poisson regression model
 - Point process models
 
-MAXENT, Resource selection functions and poisson regression models have been shown to be the proportionally equivalent (Renner and Warton 2013, Warton and Aarts 2013) and thus related to Point process model.
+MAXENT, Resource selection functions and poisson regression models have been shown to be the proportionally equivalent and thus related to Point process model.
 
 In this section part we will focus on point process model. Specifically, we will go over the work of Renner et al. (2015).
 
@@ -111,8 +111,6 @@ Measure the average number of individual found within a distance $r$ from a typi
 <img src="assets/img/presence_only/Ripley_k_illustration.png" height="320px"></img>
 </div>
 
-
-In R it can be calculated using the `Kest` function in `spatstat` package.
 
 ---
 
@@ -307,17 +305,6 @@ $T$ - Transpose of a matrix
 
 # Gibbs point process
 
-## The Gibbs point process model
-
-$$\ln \lambda(s) = \mathbf{x}(s)^T\beta + t_s(\mathbf{s}_P)\theta$$
-$t_s(\mathbf{s}_P)$ - The area of a disc of radius $r$ centred at location $s$ that does not intersect with similar discs centred around each of the presence points $\mathbf{s}_P$ .
-
-$\theta$ - Interaction parameter (if positive, the points are clustered)
-
----
-
-# Gibbs point process
-
 ## The area-interaction processes models
 
 - Assume interaction among all points within a distance of $2r$.
@@ -456,7 +443,7 @@ We have to continue with the theory
 
 # Dealing with absences
 
-To understand how to deal with absences, we have to first learn about how point process model are estsimated
+To understand how to deal with absences, we have to first learn about how point process model are estimated
 
 #### Log-likelihood function of a Poisson point process model
 
@@ -482,7 +469,7 @@ $$l(\beta; \mathbf{s}_P) = \sum_{i=1}^m\ln\lambda(s_i)-\int_A\lambda(s) ds$$
 
 ### <font color = "red">Problem</font>
 
-This likelihood function cannot be solve because the integral does not have closed form
+This likelihood function cannot be solve because the integral does not have a closed form
 
 It has to be approximated numerically. In mathematical terms this is known as <font color = "blue">quadrature</font>.
 
