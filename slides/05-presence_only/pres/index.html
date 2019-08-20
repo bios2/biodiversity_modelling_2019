@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day2. Species distribution modelling on presence-only data</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Day2. Species distribution modelling on presence-only data">
+  <meta name="author" content="F. Guillaume Blanchet">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="./libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/default.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="./libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="./libraries/frameworks/io2012/js/slides" 
+    src="./libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/logo.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Day2. Species distribution modelling on presence-only data</h1>
+    <h2>https://github.com/bios2/biodiversity_modelling_2019.git</h2>
+    <p>F. Guillaume Blanchet<br/>Laboratoire d'écologie intégrative</p>
+  </hgroup>
+  <article></article>
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <!--  <a href="#slide-1"></a> -->
+  <hgroup>
+    <h1>Important considerations</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Presence-only data are likely the most challenging data to use and model because they carry very little information.</p>
+
+<p>The species data we have access to when dealing with presence-only data are coordinate of points, That&#39;s it !</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_only/GBIF_bird.png" height="350px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-2" style="background:;">
+  <!--  <a href="#slide-2"></a> -->
+  <hgroup>
+    <h1>Technique to model presence-only data</h1>
+  </hgroup>
+  <article data-timings="">
+    <h4>Envelope model</h4>
+
+<ul>
+<li>BIOCLIM (Busby 1991)</li>
+</ul>
+
+<h4>Distance model</h4>
+
+<ul>
+<li>DOMAIN (Carpenter et al. 1993)</li>
+<li>LIVES (Elith et al. 2006)</li>
+</ul>
+
+<p>These three approaches have been shown to perform overall poorly by Elith et al. (2006)</p>
+
+<p>We will not discuss more about these approach in the course.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-3" style="background:;">
+  <!--  <a href="#slide-3"></a> -->
+  <hgroup>
+    <h1>Technique to model presence-only data</h1>
+  </hgroup>
+  <article data-timings="">
+    <h4>Point process models (Illian et al. 2008)</h4>
+
+<ul>
+<li>MAXENT (Phillips et al. 2006)</li>
+<li>Resource selection functions (McDonald et al. 2013 for a review)</li>
+<li>Poisson regression model</li>
+<li>Point process models</li>
+</ul>
+
+<p>MAXENT, Resource selection functions and poisson regression models have been shown to be the proportionally equivalent (Renner and Warton 2013, Warton and Aarts 2013) and thus related to Point process model.</p>
+
+<p>In this section part we will focus on point process model. Specifically, we will go over the work of Renner et al. (2015).</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-4" style="background:;">
+  <!--  <a href="#slide-4"></a> -->
+  <hgroup>
+    <h1>Point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Point process models are designed to estimate <font color="blue">where</font> the points (i.e. indiviual of a species) are to be observed. </p>
+
+<p>They are based on:</p>
+
+<ul>
+<li>The spatial locations of the points </li>
+<li>The number of points (i.e. species observation) occurring </li>
+<li>A set of explanatory variables found in the study region</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-5" style="background:;">
+  <!--  <a href="#slide-5"></a> -->
+  <hgroup>
+    <h1>Point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>The intensity is the key</h2>
+
+<p>The main goal of a point process model is to measure the <font color="blue" size = 6>intensity</font>, not the probability of occurrence of a species.</p>
+
+<p>The intensity a point process is a function of:</p>
+
+<ul>
+<li>The distribution of sampled individuals in space </li>
+<li>The spatial units of measurements</li>
+</ul>
+
+<h2><font color="red">Warning</font></h2>
+
+<p>The estimated intensity resulting from a point process model almost always reflect the intensity of the <font color="blue">sampled</font> individuals. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-6" style="background:;">
+  <!--  <a href="#slide-6"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>A Poisson model (or Poisson regression) aims at modelling the intensity of a process by accounting different factors that are assumed to influence this process. </p>
+
+<p>It is based on counts of individuals.</p>
+
+<h2>Asumptions of the inhomogeneous Poisson point process models</h2>
+
+<h3>Individuals are independent of each other</h3>
+
+<p>This implies that all individuals considered in a region follow a Poisson random variable</p>
+
+<h3>The estimated intensity varies spatially</h3>
+
+<p>This implies that the intensity varies according to environmental conditions.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-7" style="background:;">
+  <!--  <a href="#slide-7"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Checking for independence - Ripley&#39;s K-function</h2>
+
+<p>Measure the average number of individual found within a distance \(r\) from a typical point \(s\) resulting from a particular point process. </p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_only/Ripley_k_illustration.png" height="320px"></img>
+</div>
+
+<p>In R it can be calculated using the <code>Kest</code> function in <code>spatstat</code> package.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-8" style="background:;">
+  <!--  <a href="#slide-8"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Checking for independence - Ripley&#39;s K-function</h2>
+
+<p>It is calculated as </p>
+
+<p>\[K(r) = 2\pi r^{-2}\int_0^r\lambda(s) dr\]
+\(r\) - the radius of a circle</p>
+
+<p>\(\int_0^r\lambda(s) dr\) - sum of all individuals \(s\) in a circle of radius \(r\) given the point process \(\lambda(s)\)</p>
+
+<ul>
+<li><p>\(K(r) > \pi r^{-2}\) : The point pattern is assumed to be aggregated</p></li>
+<li><p>\(K(r) = \pi r^{-2}\) : The point pattern is assumed to be random</p></li>
+<li><p>\(K(r) < \pi r^{-2}\) : The point pattern is assumed to be regular</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-9" style="background:;">
+  <!--  <a href="#slide-9"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Accounting for variation in spatial intensity</h2>
+
+<p>In the context of point process model, a Poisson regression can be defined as follow
+\[\ln \lambda(s) = \mathbf{x}(s)^T\beta\]
+\(\lambda(s)\) - A point process for location \(s\)</p>
+
+<p>\(\mathbf{x}(s)\) - Explanatory variables measured at location \(s\)</p>
+
+<p>\(\beta\) - Parameters associated to the explanatory variables</p>
+
+<p>\(T\) - Transpose of a matrix</p>
+
+<p>This model assumes a log-linear relationship between the point process and the explanatory variables. </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-10" style="background:;">
+  <!--  <a href="#slide-10"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Applying an inhomogeneous Poisson point process models</h2>
+
+<ol>
+<li>Break the data into grid cells</li>
+<li>Fit a Poisson log-linear model to the count of the number of individuals in each cell. The fitted Poisson model could be a:
+
+<ul>
+<li>A linear regression</li>
+<li>A polynomial regression</li>
+<li>An additive model</li>
+<li>etc.</li>
+</ul></li>
+</ol>
+
+<p>That&#39;s it ! <img src="assets/img/presence_only/face-with-party-horn-and-party-hat_1f973.png" align="middle" height="100px"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-11" style="background:;">
+  <!--  <a href="#slide-11"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Applying an inhomogeneous Poisson point process models</h2>
+
+<ol>
+<li>Break the data into grid cells</li>
+<li>Fit a Poisson log-linear model to the count of the number of individuals in each cell. The fitted Poisson model could be a:
+
+<ul>
+<li>A linear regression</li>
+<li>A polynomial regression</li>
+<li>An additive model</li>
+<li>etc.</li>
+</ul></li>
+</ol>
+
+<p>That&#39;s it ! <img src="assets/img/presence_only/face-with-party-horn-and-party-hat_1f973.png" align="middle" height="100px">
+Wrong. There are a number of problem with this procedure.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-12" style="background:;">
+  <!--  <a href="#slide-12"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>1. Not a good break</h2>
+
+<p>Important information can be lost when breaking the data into grid cells</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/disappointed-but-relieved-face_1f625.png" align="middle" height="80px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-13" style="background:;">
+  <!--  <a href="#slide-13"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>1. Not a good break</h2>
+
+<p>Important information can be lost when breaking the data into grid cells</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/disappointed-but-relieved-face_1f625.png" align="middle" height="80px">
+</div>
+
+<h2>2. A problem of independence</h2>
+
+<ul>
+<li><p>The intensity in nearby regions are <font color = "blue">completely</font> explained by the explanatory variables This is almost never the case.</p></li>
+<li><p>Spatial aggregation resulting from dispersal or social behaviour is not accounted for</p></li>
+</ul>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/crying-face_1f622.png" align="middle" height="80px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-14" style="background:;">
+  <!--  <a href="#slide-14"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>3. A problem of absences</h2>
+
+<p>Recall that the data used only informs us about where individuals of a species are, but we know <font color="red">nothing</font> about where they are not found.</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/loudly-crying-face_1f62d.png" align="middle" height="100px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-15" style="background:;">
+  <!--  <a href="#slide-15"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>3. A problem of absences</h2>
+
+<p>Recall that the data used only informs us about where individuals of a species are, but we know <font color="red">nothing</font> about where they are not found.</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/loudly-crying-face_1f62d.png" align="middle" height="100px">
+</div>
+
+<p>How can we solve the problems with inhomogeneous Poisson point process models ?</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/thinking-face_1f914.png" align="middle" height="100px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-16" style="background:;">
+  <!--  <a href="#slide-16"></a> -->
+  <hgroup>
+    <h1>Inhomogeneous Poisson point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>3. A problem of absences</h2>
+
+<p>Recall that the data used only informs us about where individuals of a species are, but we know <font color="red">nothing</font> about where they are not found.</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/loudly-crying-face_1f62d.png" align="middle" height="100px">
+</div>
+
+<p>How can we solve the problems with inhomogeneous Poisson point process models?</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/thinking-face_1f914.png" align="middle" height="100px">
+</div>
+
+<p>Let&#39;s delve a little deeper into the point process literature.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-17" style="background:;">
+  <!--  <a href="#slide-17"></a> -->
+  <hgroup>
+    <h1>Gibbs point process</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>The Gibbs point process model is an inhomogeneous Poisson point process model that relaxes the assumption of independence.</p>
+
+<h2>Assumption</h2>
+
+<ul>
+<li>There are interactions between sets of points within a certain distance of each other.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-18" style="background:;">
+  <!--  <a href="#slide-18"></a> -->
+  <hgroup>
+    <h1>Gibbs point process</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>The Gibbs point process model</h2>
+
+<p>\[\ln \lambda(s) = \mathbf{x}(s)^T\beta + t_s(\mathbf{s}_P)\theta\]</p>
+
+<p>\(t_s(\mathbf{s}_P)\) - The area of a disc of radius \(r\) centred at location \(s\) that does not intersect with similar discs centred around each of the presence points \(\mathbf{s}_P\) .</p>
+
+<p>\(\theta\) - Interaction parameter (if positive, the points are clustered)</p>
+
+<p>\(\lambda(s)\) - A point process for location \(s\)</p>
+
+<p>\(\mathbf{x}(s)\) - Explanatory variables measured at location \(s\)</p>
+
+<p>\(\beta\) - Parameters associated to the explanatory variables</p>
+
+<p>\(T\) - Transpose of a matrix</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-19" style="background:;">
+  <!--  <a href="#slide-19"></a> -->
+  <hgroup>
+    <h1>Gibbs point process</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>The Gibbs point process model</h2>
+
+<p>\[\ln \lambda(s) = \mathbf{x}(s)^T\beta + t_s(\mathbf{s}_P)\theta\]
+\(t_s(\mathbf{s}_P)\) - The area of a disc of radius \(r\) centred at location \(s\) that does not intersect with similar discs centred around each of the presence points \(\mathbf{s}_P\) .</p>
+
+<p>\(\theta\) - Interaction parameter (if positive, the points are clustered)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-20" style="background:;">
+  <!--  <a href="#slide-20"></a> -->
+  <hgroup>
+    <h1>Gibbs point process</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>The area-interaction processes models</h2>
+
+<ul>
+<li>Assume interaction among all points within a distance of \(2r\).</li>
+<li>Can model clustering</li>
+<li>Can model inhibition (regular patterns)</li>
+<li>Biological interpretable (e. g. dispersal limitation)</li>
+</ul>
+
+<h2>Other Gibbs point process</h2>
+
+<ul>
+<li>Strauss process</li>
+<li>Pairwise soft core interaction</li>
+<li>Diggle-Gratton potential</li>
+<li>Geyer&#39;s saturation process</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-21" style="background:;">
+  <!--  <a href="#slide-21"></a> -->
+  <hgroup>
+    <h1>Spatial log-Gaussian Cox process</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This is in essence a generalized linear mixed model point process with a normally distributed random intercept. It is another variant of an inhomogeneous Poisson point process models.</p>
+
+<h2>Assumption</h2>
+
+<ul>
+<li>The intensity among the points is a function of the explanatory variables and of a stochastic Gaussian process</li>
+<li>The stochastic Gaussian process captures all the spatial dependence of the species not captured the other explanatory variables</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-22" style="background:;">
+  <!--  <a href="#slide-22"></a> -->
+  <hgroup>
+    <h1>Spatial log-Gaussian Cox process</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Spatial log-Gaussian Cox process model</h2>
+
+<p>\[\ln \lambda(s) = \mathbf{x}(s)^T\beta + \xi(s)\]</p>
+
+<p>\(\xi(s)\) -  a spatial Gaussian process</p>
+
+<p>\(\lambda(s)\) - A point process for location \(s\)</p>
+
+<p>\(\mathbf{x}(s)\) - Explanatory variables measured at location \(s\)</p>
+
+<p>\(\beta\) - Parameters associated to the explanatory variables</p>
+
+<p>\(T\) - Transpose of a matrix</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-23" style="background:;">
+  <!--  <a href="#slide-23"></a> -->
+  <hgroup>
+    <h1>Spatial log-Gaussian Cox process</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Spatial log-Gaussian Cox process model</h2>
+
+<p>\[\ln \lambda(s) = \mathbf{x}(s)^T\beta + \xi(s)\]</p>
+
+<p>\(\xi(s)\) -  a spatial Gaussian process</p>
+
+<p>This spatial Gaussian process has</p>
+
+<ul>
+<li>A mean of 0</li>
+<li>A covariance function that depends on the distance between observations</li>
+</ul>
+
+<p>A such, closer observations are assumed to be more positively correlated.</p>
+
+<p>Another way to see \(\xi(s)\), is as a latent variable associated to the distribution of the species.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-24" style="background:;">
+  <!--  <a href="#slide-24"></a> -->
+  <hgroup>
+    <h1>Using presence-only data to map a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This was a lot of theory...</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-with-uneven-eyes-and-wavy-mouth_1f974.png" align="middle" height="100px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-25" style="background:;">
+  <!--  <a href="#slide-25"></a> -->
+  <hgroup>
+    <h1>Using presence-only data to map a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This was a lot of theory...</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-with-uneven-eyes-and-wavy-mouth_1f974.png" align="middle" height="100px">
+</div>
+
+<h4>Using Gibbs and log-Gaussian Cox process models we now know how to:</h4>
+
+<ul>
+<li>Use presence-only data without having break the data into grid cells
+<div style='text-align:center;'>
+<img src="assets/img/presence_only/smiling-face-with-open-mouth_1f603.png" align="middle" height="100px">
+</div></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-26" style="background:;">
+  <!--  <a href="#slide-26"></a> -->
+  <hgroup>
+    <h1>Using presence-only data to map a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This was a lot of theory...</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-with-uneven-eyes-and-wavy-mouth_1f974.png" align="middle" height="100px">
+</div>
+
+<h4>Using Gibbs and log-Gaussian Cox process models we now know how to:</h4>
+
+<ul>
+<li>Use presence-only data without having to break the data into grid cells
+<div style='text-align:center;'>
+<img src="assets/img/presence_only/smiling-face-with-open-mouth_1f603.png" align="middle" height="100px">
+</div></li>
+<li>Better deal with the non-independence between points.
+<div style='text-align:center;'>
+<img src="assets/img/presence_only/smiling-face-with-open-mouth-and-smiling-eyes_1f604.png" align="middle" height="100px">
+</div></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-27" style="background:;">
+  <!--  <a href="#slide-27"></a> -->
+  <hgroup>
+    <h1>Using presence-only data to map a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This was a lot of theory...</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-with-uneven-eyes-and-wavy-mouth_1f974.png" align="middle" height="100px">
+</div>
+
+<h4>However, the Gibbs and log-Gaussian Cox process models do not solve the problem of absences</h4>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-with-pleading-eyes_1f97a.png" align="middle" height="100px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-28" style="background:;">
+  <!--  <a href="#slide-28"></a> -->
+  <hgroup>
+    <h1>Using presence-only data to map a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This was a lot of theory...</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-with-uneven-eyes-and-wavy-mouth_1f974.png" align="middle" height="100px">
+</div>
+
+<h4>However, the Gibbs and log-Gaussian Cox process models do not solve the problem of absences</h4>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-with-pleading-eyes_1f97a.png" align="middle" height="100px">
+</div>
+
+<p>We have to continue with the theory </p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/face-screaming-in-fear_1f631.png" align="middle" height="100px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-29" style="background:;">
+  <!--  <a href="#slide-29"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>To understand how to deal with absences, we have to first learn about how point process model are estsimated</p>
+
+<h4>Log-likelihood function of a Poisson point process model</h4>
+
+<p>\[l(\beta; \mathbf{s}_P) = \sum_{i=1}^m\ln\lambda(s_i)-\int_A\lambda(s) ds\]</p>
+
+<p>\(\beta\) - Parameters associated to the explanatory variables</p>
+
+<p>\(\mathbf{s}_P\) - The presence points</p>
+
+<p>\(\lambda(s)\) - A point process for location \(s\)</p>
+
+<p>\(A\) - Study region</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-30" style="background:;">
+  <!--  <a href="#slide-30"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>To understand how to deal with absences, we have to first learn about how point process model are estsimated</p>
+
+<h4>Log-likelihood function of a Poisson point process model</h4>
+
+<p>\[l(\beta; \mathbf{s}_P) = \sum_{i=1}^m\ln\lambda(s_i)-\int_A\lambda(s) ds\]</p>
+
+<h3><font color = "red">Problem</font></h3>
+
+<p>This likelihood function cannot be solve because the integral does not have closed form</p>
+
+<p>It has to be approximated numerically. In mathematical terms this is known as <font color = "blue">quadrature</font>.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-31" style="background:;">
+  <!--  <a href="#slide-31"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Using quadrature, the log-likelihood function of a Poisson point process model can be approximated as</p>
+
+<p>\[l(\beta; \mathbf{s}_P) \approx \sum_{j=1}^{m+n}w_j\left(y_j\ln\lambda(s_j)-\lambda(s_j)\right)\]</p>
+
+<p>\(\beta\) - Parameters associated to the explanatory variables</p>
+
+<p>\(\mathbf{s}_P = \{s_{1},\dots,s_{m}\}\) - Presence points</p>
+
+<p>\(\mathbf{s}_0 = \{s_{m+1},\dots,s_{m+n}\}\) - Quadrature points</p>
+
+<p>\(\lambda(s)\) - A point process for location \(s\)</p>
+
+<p>\(\mathbf{w} = \{w_{1},\dots,w_{m+n}\}\) - Quadrature weights. A weight given to all points.</p>
+
+<p>For presence \(y_j = 1/w_j\) and for quadrature points \(y_j = 0\) </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-32" style="background:;">
+  <!--  <a href="#slide-32"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Quadrature weights</h2>
+
+<p>Using quadrature weights \(w_j\) are the key to estimate a Poisson point process model log-likelihood. </p>
+
+<p>Quadrature weights are:</p>
+
+<ul>
+<li>A spatial scaling so that the intensity of the point process (\(\lambda\)) has spatial unit as opposed to observational units</li>
+<li>Conceptually, they quantify the neighbourhood area around the point \(s_j\) after partitionning the study area into neighbourhood around each point</li>
+</ul>
+
+<p>Using quadrature weights allows points process models to be estimate using standard generalized linear models.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-33" style="background:;">
+  <!--  <a href="#slide-33"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Choosing quadrature points</h2>
+
+<h3>A solution?</h3>
+
+<p>Treat the &quot;background&quot; as a set of absences (0s). </p>
+
+<p>Background points are:</p>
+
+<ul>
+<li>Usually sampled randomly in the area considered</li>
+<li>Usually 10 000 points are sampled (default settings in various softwares)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-34" style="background:;">
+  <!--  <a href="#slide-34"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Choosing quadrature points</h2>
+
+<h3>A <font color="red">bad</font> solution!</h3>
+
+<ul>
+<li>Choosing background points location and number is mostly done arbitrarly </li>
+<li>When the number of background points changes the results changes</li>
+<li>When the location of background point changes the results changes</li>
+</ul>
+
+<p>In other words, the result are scale dependent. </p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/serious-face-with-symbols-covering-mouth_1f92c.png" align="middle" height="100px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-35" style="background:;">
+  <!--  <a href="#slide-35"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Choosing quadrature points</h2>
+
+<p>If we rethink the problem in the context of quadrature, quadrature points need to be chosen to estimate the integral of the log-likelihood function.</p>
+
+<p>What becomes important is to answer the following questions:</p>
+
+<ul>
+<li>How many quadrature points need to be selected?</li>
+<li>Where should we place them?</li>
+</ul>
+
+<h3>Particularities of quadrature points</h3>
+
+<p>The location and number of presence points are <font color = "red" size = 6>irrelevant</font> !</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-36" style="background:;">
+  <!--  <a href="#slide-36"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Where to place quadrature points?</h2>
+
+<ul>
+<li>On a regularly spaced grid</li>
+<li>Randomly</li>
+<li>By increasing the density of points where the environmental variability is high</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-37" style="background:;">
+  <!--  <a href="#slide-37"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How many quadrature points?</h2>
+
+<p>This will depend on the data. So there are no single answers.</p>
+
+<h2>An example from Renner et al. (2015)</h2>
+
+<p>Procedure used:</p>
+
+<ul>
+<li>Locate quadrature points on a grid of 16 \(\text{km}^2\) </li>
+<li>Estimate ikelihood</li>
+<li>Locate quadrature points on a grid with half the mesh size (8 \(\text{km}^2\))</li>
+<li>Estimate likelihood</li>
+</ul>
+
+<p>If the likelihood converged (stops increasing), stop, otherwise continue.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-38" style="background:;">
+  <!--  <a href="#slide-38"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How many quadrature points?</h2>
+
+<p>This will depend on the data. So there are no single answers.</p>
+
+<h2>An example from Renner et al. (2015)</h2>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/Renner_et_al_2a.png" align="middle" height="320px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-39" style="background:;">
+  <!--  <a href="#slide-39"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How many quadrature points?</h2>
+
+<p>This will depend on the data. So there are no single answers.</p>
+
+<h2>Another example from Renner et al. (2015)</h2>
+
+<p>Procedure used:</p>
+
+<ul>
+<li>Randomly sample quadrature points 30 times </li>
+<li>Estimate the log-likelihood for each random sample</li>
+<li>Perform this procedure for an increasing number of quadrature points</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-40" style="background:;">
+  <!--  <a href="#slide-40"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How many quadrature points?</h2>
+
+<p>This will depend on the data. So there are no single answers.</p>
+
+<h2>Another example from Renner et al. (2015)</h2>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_only/Renner_et_al_2b.png" align="middle" height="320px">
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-41" style="background:;">
+  <!--  <a href="#slide-41"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>A quick way to find if enough quadrature points were used</h2>
+
+<p>The model standard error can be very useful to assess whether enough quadrature point were used. It can calculated as follow:</p>
+
+<ol>
+<li>Run a model with \(n\) quadrature points (say 10 000)</li>
+<li>Calculate the estimated intensity for each quadrature point</li>
+<li>Calculate the standard deviation (\(s\)) of the previously calculated estimated intensity</li>
+<li>Find the area \(A\) of the study region</li>
+<li>Calculate the standard error of the model</li>
+</ol>
+
+<p>\[\sigma = \frac{As}{\sqrt{n}}\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-42" style="background:;">
+  <!--  <a href="#slide-42"></a> -->
+  <hgroup>
+    <h1>Dealing with absences</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>A quick way to find the number quadrature points to use</h2>
+
+<p>Using the previous equation, we can make a calculated guess of the number of quadrature points required assuming a specific model. This can be done as follow</p>
+
+<ol>
+<li>Define the desired standard error within which the true log-likelihood is located.</li>
+<li>Run a model point process model</li>
+<li>Calculate the estimated intensity for each quadrature point</li>
+<li>Calculate the standard deviation (\(s\)) of the previously calculated estimated intensity</li>
+<li>Find the area \(A\) of the study region</li>
+<li>Calculate the number of quadrature points that would be required</li>
+</ol>
+
+<p>\[n = \frac{A^2s^2}{\sigma^2}\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-43" style="background:;">
+  <!--  <a href="#slide-43"></a> -->
+  <hgroup>
+    <h1>General guidelines about point process models</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The number of quadrature points depends on the original data</li>
+<li>Often more quadrature points are need when the environment is measured at high resolution</li>
+<li>Often more quadrature points are need when the survey area is broad</li>
+<li>After having chosen the number of quadrature points, we should <font color ="red" size = 6>not</font> play with it</li>
+<li>Bias should be corrected by specifying covariates in the model. For example, by adding
+
+<ul>
+<li>Distance from main road</li>
+<li>Distance from urban centers</li>
+<li>Landscape features</li>
+</ul></li>
+<li>Attaching weights to quadrature points is essential to have a scale-invariant estimate of the log-likelihood</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Important considerations'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Technique to model presence-only data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Technique to model presence-only data'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Point process models'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Point process models'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Inhomogeneous Poisson point process models'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Inhomogeneous Poisson point process models'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Inhomogeneous Poisson point process models'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Inhomogeneous Poisson point process models'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Inhomogeneous Poisson point process models'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Inhomogeneous Poisson point process models'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Inhomogeneous Poisson point process models'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Inhomogeneous Poisson point process models'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Inhomogeneous Poisson point process models'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Inhomogeneous Poisson point process models'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Inhomogeneous Poisson point process models'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Gibbs point process'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Gibbs point process'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Gibbs point process'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Gibbs point process'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Spatial log-Gaussian Cox process'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Spatial log-Gaussian Cox process'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Spatial log-Gaussian Cox process'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Using presence-only data to map a species'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Using presence-only data to map a species'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Using presence-only data to map a species'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Using presence-only data to map a species'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Using presence-only data to map a species'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Dealing with absences'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Dealing with absences'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Dealing with absences'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Dealing with absences'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Dealing with absences'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Dealing with absences'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Dealing with absences'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Dealing with absences'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='Dealing with absences'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='Dealing with absences'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='Dealing with absences'>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title='Dealing with absences'>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title='Dealing with absences'>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title='Dealing with absences'>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title='General guidelines about point process models'>
+         43
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="./libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="./libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

@@ -1,0 +1,179 @@
+
+# Introduction
+## What makes a species occur in a particular location?
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Brownbear_crop.jpg" height="400px"></img>
+</div>
+
+
+---
+
+# Introduction
+## What makes a species occur in a particular location?
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Taiga_Landscape_in_Canada.png" height="400px"></img>
+</div>
+
+
+---
+
+# Introduction
+## What makes a species occur in a particular location?
+<div style='text-align:center;'>
+<img src="assets/img/intro/Brownbearwithsalmoneggs.png" height="400px"></img>
+</div>
+
+
+---
+
+# Introduction
+## What makes a species occur in a particular location?
+<div style='text-align:center;'>
+<img src="assets/img/intro/Grizzlymumcubs-c01.png" height="400px"></img>
+</div>
+
+---
+
+# Introduction
+## What do we want to do when modelling species distribution?
+The goal of an SDM is to find out where and/or when a species occur.
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/GB_Historic_Distribution_NA_wordlBase.jpg" height="380px"></img>
+</div>
+
+Often maps are the only output of SDMs but they should not be!
+
+---
+
+# Small quiz (what is missing ?)
+
+## Historical and current grizzly bear range in North America (USGS)
+
+<style type="text/css">
+#wrap {
+   width:1200px;
+   margin:0 0;
+}
+#left_col {
+   float:left;
+   width:600px;
+}
+#right_col {
+   float:right;
+   width:600px;
+}
+</style>
+
+<div id="wrap">
+    <div id="left_col">
+      <img src="assets/img/intro/GB_Historic_Distribution_NA_wordlBase.jpg" height="380px"></img>
+    </div>
+    <div id="right_col">
+    </div>
+</div>
+
+## Detailed Description:
+
+- Map showing historical and current grizzly bear range in North America.
+
+## Details
+
+- Image Dimensions: 3085 x 3231
+- Date Taken: Thursday, November 30, 2000
+
+---
+
+# Solution to the quiz
+
+- Information on how the map was built 
+  - Data used
+  - Type of model used to construct the map
+  - etc. 
+
+- Statistics describing the quality of the model used to build the map
+  - Measure of variance explained
+  - Confidence interval of the model
+  - etc.
+- Details about how the map shown was obtained
+- (Un)certainties about the constructed map
+
+---
+
+# Question to ask yourself when modelling a species
+
+## 1. Why do you want to model the distribution of the species?
+
+- To know where the species can be found now?
+- To know where the species was found in the past?
+- To know where the species will be found?
+- To better understand the factor influencing the species distribution?
+- To protect the species?
+- To eradicate the species?
+- etc.
+
+---
+
+# Question to ask yourself when modelling a species
+
+## 2. What species data do you have to construct your model?
+
+- Presence-only data for the species of interest?
+- Presence-absence data for the species of interest?
+- Presence-absence data for the multiple species?
+
+---
+
+# Question to ask yourself when modelling a species
+
+## 3. What other information do you have to construct your model?
+
+- Explanatory variables (climate, soil, ...)
+- Expert maps
+- Sampling intensity
+- Sampling bias
+- etc. 
+
+---
+
+
+# Question to ask yourself when modelling a species
+
+## 4. How do you want to model the distribution of the species?
+
+- I am an expert, I will just draw a map freehand!
+
+---
+
+# Question to ask yourself when modelling a species
+
+## 4. How do you want to model the distribution of the species?
+
+- I am an expert, I will just draw a map freehand!
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Snowy_owl_map.png" height="380px"></img>
+</div>
+
+---
+
+# Question to ask yourself when modelling a species
+
+## 4. How do you want to model the distribution of the species?
+
+- I am an expert, I will just draw a map freehand!
+- Which model will be used? (This depends on the type of species data)
+
+---
+
+# Question to ask yourself when modelling a species
+
+## 5. What are the assumptions of the model used?
+
+- Linearity
+- Spatial explicitness
+- Independence of observations
+- etc.
+

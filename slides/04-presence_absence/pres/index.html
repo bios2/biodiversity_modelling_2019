@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day 2. Species distribution modelling using presence-absence data</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Day 2. Species distribution modelling using presence-absence data">
+  <meta name="author" content="F. Guillaume Blanchet">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="./libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/default.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="./libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="./libraries/frameworks/io2012/js/slides" 
+    src="./libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/logo.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Day 2. Species distribution modelling using presence-absence data</h1>
+    <h2>https://github.com/bios2/biodiversity_modelling_2019.git</h2>
+    <p>F. Guillaume Blanchet<br/>Laboratoire d'écologie intégrative</p>
+  </hgroup>
+  <article></article>
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <!--  <a href="#slide-1"></a> -->
+  <hgroup>
+    <h1>Introduction</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>What makes a species occur in a particular location?</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Brownbear_crop.jpg" height="400px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-2" style="background:;">
+  <!--  <a href="#slide-2"></a> -->
+  <hgroup>
+    <h1>Introduction</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>What makes a species occur in a particular location?</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Taiga_Landscape_in_Canada.png" height="400px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-3" style="background:;">
+  <!--  <a href="#slide-3"></a> -->
+  <hgroup>
+    <h1>Introduction</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>What makes a species occur in a particular location?</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Brownbearwithsalmoneggs.png" height="400px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-4" style="background:;">
+  <!--  <a href="#slide-4"></a> -->
+  <hgroup>
+    <h1>Introduction</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>What makes a species occur in a particular location?</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Grizzlymumcubs-c01.png" height="400px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-5" style="background:;">
+  <!--  <a href="#slide-5"></a> -->
+  <hgroup>
+    <h1>Introduction</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>What do we want to do when modelling species distribution?</h2>
+
+<p>The goal of an SDM is to find out where and/or when a species occur.</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/GB_Historic_Distribution_NA_wordlBase.jpg" height="380px"></img>
+</div>
+
+<p>Often maps are the only output of SDMs but they should not be!</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-6" style="background:;">
+  <!--  <a href="#slide-6"></a> -->
+  <hgroup>
+    <h1>Small quiz (what is missing ?)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Historical and current grizzly bear range in North America (USGS)</h2>
+
+<style type="text/css">
+#wrap {
+   width:1200px;
+   margin:0 0;
+}
+#left_col {
+   float:left;
+   width:600px;
+}
+#right_col {
+   float:right;
+   width:600px;
+}
+</style>
+
+<div id="wrap">
+    <div id="left_col">
+      <img src="assets/img/intro/GB_Historic_Distribution_NA_wordlBase.jpg" height="380px"></img>
+    </div>
+    <div id="right_col">
+    </div>
+</div>
+
+<h2>Detailed Description:</h2>
+
+<ul>
+<li>Map showing historical and current grizzly bear range in North America.</li>
+</ul>
+
+<h2>Details</h2>
+
+<ul>
+<li>Image Dimensions: 3085 x 3231</li>
+<li>Date Taken: Thursday, November 30, 2000</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-7" style="background:;">
+  <!--  <a href="#slide-7"></a> -->
+  <hgroup>
+    <h1>Solution to the quiz</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Information on how the map was built </p>
+
+<ul>
+<li>Data used</li>
+<li>Type of model used to construct the map</li>
+<li>etc. </li>
+</ul></li>
+<li><p>Statistics describing the quality of the model used to build the map</p>
+
+<ul>
+<li>Measure of variance explained</li>
+<li>Confidence interval of the model</li>
+<li>etc.</li>
+</ul></li>
+<li><p>Details about how the map shown was obtained</p></li>
+<li><p>(Un)certainties about the constructed map</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-8" style="background:;">
+  <!--  <a href="#slide-8"></a> -->
+  <hgroup>
+    <h1>Question to ask yourself when modelling a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>1. Why do you want to model the distribution of the species?</h2>
+
+<ul>
+<li>To know where the species can be found now?</li>
+<li>To know where the species was found in the past?</li>
+<li>To know where the species will be found?</li>
+<li>To better understand the factor influencing the species distribution?</li>
+<li>To protect the species?</li>
+<li>To eradicate the species?</li>
+<li>etc.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-9" style="background:;">
+  <!--  <a href="#slide-9"></a> -->
+  <hgroup>
+    <h1>Question to ask yourself when modelling a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>2. What species data do you have to construct your model?</h2>
+
+<ul>
+<li>Presence-only data for the species of interest?</li>
+<li>Presence-absence data for the species of interest?</li>
+<li>Presence-absence data for the multiple species?</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-10" style="background:;">
+  <!--  <a href="#slide-10"></a> -->
+  <hgroup>
+    <h1>Question to ask yourself when modelling a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>3. What other information do you have to construct your model?</h2>
+
+<ul>
+<li>Explanatory variables (climate, soil, ...)</li>
+<li>Expert maps</li>
+<li>Sampling intensity</li>
+<li>Sampling bias</li>
+<li>etc. </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-11" style="background:;">
+  <!--  <a href="#slide-11"></a> -->
+  <hgroup>
+    <h1>Question to ask yourself when modelling a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>4. How do you want to model the distribution of the species?</h2>
+
+<ul>
+<li>I am an expert, I will just draw a map freehand!</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-12" style="background:;">
+  <!--  <a href="#slide-12"></a> -->
+  <hgroup>
+    <h1>Question to ask yourself when modelling a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>4. How do you want to model the distribution of the species?</h2>
+
+<ul>
+<li>I am an expert, I will just draw a map freehand!</li>
+</ul>
+
+<div style='text-align:center;'>
+<img src="assets/img/intro/Snowy_owl_map.png" height="380px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-13" style="background:;">
+  <!--  <a href="#slide-13"></a> -->
+  <hgroup>
+    <h1>Question to ask yourself when modelling a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>4. How do you want to model the distribution of the species?</h2>
+
+<ul>
+<li>I am an expert, I will just draw a map freehand!</li>
+<li>Which model will be used? (This depends on the type of species data)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-14" style="background:;">
+  <!--  <a href="#slide-14"></a> -->
+  <hgroup>
+    <h1>Question to ask yourself when modelling a species</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>5. What are the assumptions of the model used?</h2>
+
+<ul>
+<li>Linearity</li>
+<li>Spatial explicitness</li>
+<li>Independence of observations</li>
+<li>etc.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="transition" id="slide-15" style="background:;">
+  <!--  <a href="#slide-15"></a> -->
+  <hgroup>
+    <h1>Species distribution models on presence-absence data for a single species</h1>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-16" style="background:;">
+  <!--  <a href="#slide-16"></a> -->
+  <hgroup>
+    <h1>Important considerations</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/presence_absence/PA_red_maple.png" height="450px"></img>
+</div>
+
+<p>Knowing where a species is <font color="red">not</font> found is <font color="blue" size = 6>extremely</font> informative.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-17" style="background:;">
+  <!--  <a href="#slide-17"></a> -->
+  <hgroup>
+    <h1>Techniques to model single species presence-absence data</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Historically, a tremendous amount of work that has been done using presence-absence data.</p>
+
+<p>As such, a huge number of approaches exist to model species presence-absence.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-18" style="background:;">
+  <!--  <a href="#slide-18"></a> -->
+  <hgroup>
+    <h1>A general overview of models properties</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>The main goal of these models is to define the <font color ="blue">probability of occurrence</font> of a species at a particular location.</p>
+
+<p>They rely on a set of explanatory variables measured in the study region. These could represent</p>
+
+<ul>
+<li>Environmental characteristics</li>
+<li>Spatial coordinates of the sampled locations</li>
+<li>Other species (to account for biotic interactions)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-19" style="background:;">
+  <!--  <a href="#slide-19"></a> -->
+  <hgroup>
+    <h1>Overview of model for presence-absence data</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Three types of model will be considered today</h2>
+
+<ul>
+<li>Generalized linear models</li>
+<li>Generalized additive models</li>
+<li>Classication and regression tree</li>
+</ul>
+
+<p>These three types of models are the ones used by Franklin (1998)</p>
+
+<h2>Many other approaches exist...</h2>
+
+<ul>
+<li>Boosted regression tree</li>
+<li>Generalized dissimilarity models</li>
+<li>Genetic algorithms</li>
+<li>etc.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-20" style="background:;">
+  <!--  <a href="#slide-20"></a> -->
+  <hgroup>
+    <h1>Overview of model for presence-absence data</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Many other appraoches exist...</h2>
+
+<h3>Account for space explicitly and more precisely</h3>
+
+<ul>
+<li>Geostatistical generalized linear models</li>
+<li>Autoregressive models</li>
+<li>Decomposition of geographical coordinates</li>
+</ul>
+
+<p>These approach are all theoretically sound but they are not well adapted to deal with large expenses of data.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-21" style="background:;">
+  <!--  <a href="#slide-21"></a> -->
+  <hgroup>
+    <h1>Overview of model for presence-absence data</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Many other appraoches exist...</h2>
+
+<h3>Account for sampling biais and sampling error</h3>
+
+<ul>
+<li>Hierarchical models</li>
+</ul>
+
+<h3>Account for many different aspects...</h3>
+
+<ul>
+<li>Joint species distribution model (but we will get to that tomorrow)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="transition" id="slide-22" style="background:;">
+  <!--  <a href="#slide-22"></a> -->
+  <hgroup>
+    <h1>Generalized linear models</h1>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-23" style="background:;">
+  <!--  <a href="#slide-23"></a> -->
+  <hgroup>
+    <h1>Generalized linear models</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>When dealing with presence-absence data, binomial regression models are often used</p>
+
+<ul>
+<li>Logistic model</li>
+<li>Probit model</li>
+<li>Complementary log-log model</li>
+<li>etc.</li>
+</ul>
+
+<p>These different variant of models differ by the link function used.</p>
+
+<p>We will focus on the logistic regression.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-24" style="background:;">
+  <!--  <a href="#slide-24"></a> -->
+  <hgroup>
+    <h1>Logistic regression</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>The logistic regression is likely the most commonly used approach to model presence-absence data. In its simplest form, it can be presented as follow</p>
+
+<p>\[\text{logit}(P(y = 1)) = \mathbf{x}^T\beta\]
+\(P(y=1)\) - The probability that species \(y\) is present (1) or not</p>
+
+<p>\(\mathbf{x}\) - Matrix of explanatory variables</p>
+
+<p>\(\beta\) - Parameters associated to the explanatory variables</p>
+
+<p>\(T\) - Transpose of a matrix</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-25" style="background:;">
+  <!--  <a href="#slide-25"></a> -->
+  <hgroup>
+    <h1>Logistic regression</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>In a logistic regression, the logit link is the key to fit presence-absence data</p>
+
+<p>\[\text{logit}(p) = \log\left(\frac{p}{1 - p}\right)\]</p>
+
+<p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-26" style="background:;">
+  <!--  <a href="#slide-26"></a> -->
+  <hgroup>
+    <h1>Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>\(R^2\)</h2>
+
+<p>The coefficient of determination (\(R^2\)) is <font color = "red" size = 6>not</font> designed to be used for logistic regression, but it is a good starting point.</p>
+
+<p>It is calculated as follow</p>
+
+<p>\[R^2 = 1 - \frac{\sum^n_{i=1}(y_i-\hat{y}_i)}{\sum^n_{i=1}(y_i-\overline{y})}\]</p>
+
+<p>\(n\) - Number of samples</p>
+
+<p>\(y_i\) - Response variable value for sample \(i\)</p>
+
+<p>\(\hat{y}_i\) - Model prediction for sample \(i\)</p>
+
+<p>\(\overline{y}\) - Average of the response variable \(y\)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-27" style="background:;">
+  <!--  <a href="#slide-27"></a> -->
+  <hgroup>
+    <h1>Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>\(R^2\)</h2>
+
+<p>Conceptually, there are three ways to understand an \(R^2\):</p>
+
+<ol>
+<li>A measure of variance explained</li>
+<li>An improvement of the fitted model over a null model</li>
+<li>The square of correlation</li>
+</ol>
+
+<h2>Pseudo-\(R^2\)</h2>
+
+<p>Because there are no \(R^2\), statisticians have developped pseudo-\(R^2\) that have features similar to the \(R^2\) but that may differ in the interpretation we make of them.</p>
+
+<p>As a similarity, the different variant of pseudo-\(R^2\) generally range between 0 and 1 (although it is not always the case); higher meanning a better fit.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-28" style="background:;">
+  <!--  <a href="#slide-28"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Pseudo-\(R^2\)</h2>
+
+<p>A number of pseudo-\(R^2\) have been proposed. Here are a few,</p>
+
+<h3>Efron pseudo-\(R^2\)</h3>
+
+<p>\[R^2 = 1 - \frac{\sum^n_{i=1}(y_i-\hat{\pi}_i)}{\sum^n_{i=1}(y_i-\overline{y})}\]</p>
+
+<p>\(\hat{\pi}_i\) - Model predicted probability for sample \(i\)</p>
+
+<p>It can be interpreted as:</p>
+
+<ul>
+<li>A measure of variance explained</li>
+<li>The square of correlation</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-29" style="background:;">
+  <!--  <a href="#slide-29"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h3>McFadden pseudo-\(R^2\)</h3>
+
+<p>\[R^2 = 1 - \frac{\ln \hat{L}(M_\text{Full})}{\ln \hat{L}(M_\text{Intercept})}\]</p>
+
+<p>\(\hat{L}\) - Model estimated liklihood</p>
+
+<p>\(M_\text{Full}\) - Model that includes all explanatory variables</p>
+
+<p>\(M_\text{Intercept}\) - Model that includes none of the explanatory variables</p>
+
+<p>It can be interpreted as:</p>
+
+<ul>
+<li>A measure of variance explained</li>
+<li>An improvement of the fitted model over a null model</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-30" style="background:;">
+  <!--  <a href="#slide-30"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h3>Tjur pseudo-\(R^2\)</h3>
+
+<p>\[R^2 = \overline{\hat{\pi}}_1 - \overline{\hat{\pi}}_0\]</p>
+
+<p>\(\overline{\hat{\pi}}_1\) - Average of the model prediction for all the presences</p>
+
+<p>\(\overline{\hat{\pi}}_0\) - Average of the model prediction for all the absences</p>
+
+<p>It can be interpreted as:</p>
+
+<ul>
+<li>A measure of variance explained</li>
+<li>An improvement of the fitted model over a null model</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-31" style="background:;">
+  <!--  <a href="#slide-31"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h3>Tjur pseudo-\(R^2\)</h3>
+
+<pre><code class="r">tjurR2 &lt;- function(y, pred){
+  pseudoR2 &lt;- mean(pred[y == 1]) - mean(pred[y == 0])
+  return(pseudoR2)
+}
+</code></pre>
+
+<h3>Pseudo-\(R^2\) in R</h3>
+
+<p>All the previously mentionned pseudo-\(R^2\) can be computed in R using the <code>pseudoR2</code> function from the package <code>DescTools</code>.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-32" style="background:;">
+  <!--  <a href="#slide-32"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Receiver operating characteristic (ROC) curve</h2>
+
+<p>The receiver operating characteristic (ROC) curve is a diagnostic plot that help defines the quality of a model</p>
+
+<p>It is calculated using the following table</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/ROC.png" height="300px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-33" style="background:;">
+  <!--  <a href="#slide-33"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Receiver operating characteristic (ROC) curve</h2>
+
+<p>Steps to calculate a ROC curve:</p>
+
+<ol>
+<li>Define a sequence of value between 0 and 1</li>
+<li>For the first value of the sequence calculate the <font color = "blue">true positive rate</font></li>
+<li>For the first value of the sequence calculate the <font color = "orange">false positive rate</font></li>
+<li>Continue for all the remaining values</li>
+<li>Plot the  <font color = "blue">true positive rate</font> against the <font color = "orange">false positive rate</font></li>
+</ol>
+
+<h4>Let&#39;s code this in R!</h4>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-34" style="background:;">
+  <!--  <a href="#slide-34"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Receiver operating characteristic (ROC) curve</h2>
+
+<h3>Data and model to use</h3>
+
+<pre><code class="r">set.seed(12)
+
+# Model
+beta &lt;- c(0.3, -3, 1)
+x &lt;- cbind(1, scale(1:200), scale(1:200)^2)
+model &lt;- binomial()$linkinv(x%*%beta)
+
+# Response variable
+y&lt;-rbinom(200, 1, model)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-35" style="background:;">
+  <!--  <a href="#slide-35"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Receiver operating characteristic (ROC) curve - Solution</h2>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-36" style="background:;">
+  <!--  <a href="#slide-36"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Receiver operating characteristic (ROC) curve - Solution</h2>
+
+<pre><code class="r"># Result object
+TPR &lt;- numeric()
+FPR &lt;- numeric()
+
+# Sequence
+sequ &lt;- seq(0,1, length = 200)
+
+# Calculate TPR and FPR
+for(i in 1:length(sequ)){
+  pos &lt;- ifelse(model &gt; sequ[i],1,0)
+  TPR[i] &lt;- sum(pos == 1 &amp; y == 1)/sum(y == 1)
+  FPR[i] &lt;- sum(pos == 1 &amp; y == 0)/sum(y == 0)
+}
+
+# Plot
+plot(FPR, TPR, type = &quot;n&quot;, xlab = &quot;False positive rate&quot;, ylab = &quot;True positive rate&quot;, las = 1)
+lines(FPR, TPR)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-37" style="background:;">
+  <!--  <a href="#slide-37"></a> -->
+  <hgroup>
+    <h1>Logistic regression - Checking for model quality</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Receiver operating characteristic (ROC) curve - Solution</h2>
+
+<p>There are a few packages in R that implemented the ROC curve</p>
+
+<ul>
+<li><code>pROC</code></li>
+<li><code>ROCR</code></li>
+</ul>
+
+<p>These two are probably the most known ones.</p>
+
+<p>An interesting aspect of ROC curves is that they can be used broadly, they are not constrained to the logistic model.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="transition" id="slide-38" style="background:;">
+  <!--  <a href="#slide-38"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-39" style="background:;">
+  <!--  <a href="#slide-39"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>A bit of history</h2>
+
+<p>Additive model were first proposed by</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/Friedman_Stuetzle.png" height="200px"></img>
+</div>
+
+<p>In the paper</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/Additive_model_paper.png" height="100px"></img>
+</div>
+
+<p>published in 1981 in the Journal of the American Statistical Association</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-40" style="background:;">
+  <!--  <a href="#slide-40"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>A bit of history</h2>
+
+<p>As for generalized additive models, it was developped by</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/Hastie_Tibshirani.png" height="200px"></img>
+</div>
+
+<p>In the book published in 1990</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/GAM_book_TH.jpeg"
+height="150px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-41" style="background:;">
+  <!--  <a href="#slide-41"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Additive models are a form of linear models.</p>
+
+<p>A logistic additive model with a single explanatory variable can be defined as:</p>
+
+<p>\[\text{logit}(P(y_i = 1)) = f(x_i)\]
+where
+\[f(x) = \sum_{j = 1}^k b_j(x)\beta_j\]</p>
+
+<p>\(b_j(x)\) - \(j^\text{th}\) basis function of the explanatory variable \(x\)</p>
+
+<p>\(\beta_j(x)\) - \(j^\text{th}\) parameters associated to the basis function of the explanatory variable \(x\)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-42" style="background:;">
+  <!--  <a href="#slide-42"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This is some pretty dense theory...</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/grinning-face-with-one-large-and-one-small-eye_1f92a.png" height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-43" style="background:;">
+  <!--  <a href="#slide-43"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>This is some pretty dense theory...</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/grinning-face-with-one-large-and-one-small-eye_1f92a.png" height="100px"></img>
+</div>
+
+<p>Let&#39;s clarify what \(f(x)\) is about.</p>
+
+<p>The \(f(x)\) function is a general way to representation many different formulations of an additive model.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-44" style="background:;">
+  <!--  <a href="#slide-44"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>An example of \(f(x)\) is a polynomial regression of degree 5, that is</p>
+
+<p>\[\text{logit}(P(y_i = 1)) = f(x_i)\]
+where
+\[f(x) = \sum_{j = 0}^5 b_j(x)\beta_j\]
+and
+\[b_j(x) = x^j\]
+which can be rewritten as</p>
+
+<p>\[\text{logit}(P(y_i = 1)) = \beta_0 + x\beta_1 + x^2\beta_2 + x^3\beta_3 + x^4\beta_4 + x^5\beta_5\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-45" style="background:;">
+  <!--  <a href="#slide-45"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Visually this can be represented as</p>
+
+<p><img src="assets/fig/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-46" style="background:;">
+  <!--  <a href="#slide-46"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>As mentionned before, the polynomial base function is one a many base function used in generalized additive models, sadly it is actually not very good.</p>
+
+<p>Ones more commonly used is the cubic regression splines</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_absence/cubic_spline.png" height="350px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-47" style="background:;">
+  <!--  <a href="#slide-47"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Cubic regression spline</h2>
+
+<h3>Advantage</h3>
+
+<ul>
+<li>More flexible than a polynomial regression</li>
+</ul>
+
+<h3>Disadvantage</h3>
+
+<ul>
+<li>Deciding how many knots to place is subjective</li>
+<li>Deciding where to place the knots is subjective</li>
+<li>It can only be applied to a single variable</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-48" style="background:;">
+  <!--  <a href="#slide-48"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>On our data a cubic regression spline results in</p>
+
+<p><img src="assets/fig/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-49" style="background:;">
+  <!--  <a href="#slide-49"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Thin plate regression spline</h2>
+
+<p>The thin plate regression spline can be understood by thinking of an elastic mosquito mesh...</p>
+
+<p>What can we do with an elastic mosquito mesh to fit to an object?</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-50" style="background:;">
+  <!--  <a href="#slide-50"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Thin plate regression spline</h2>
+
+<p>The thin plate regression spline can be understood by thinking of an elastic mosquito mesh...</p>
+
+<p>What can we do with an elastic mosquito mesh to fit to an object?</p>
+
+<ul>
+<li>Translate</li>
+<li>Rotate</li>
+<li>Stretch (scale, compression, dilation)</li>
+<li>Shear</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-51" style="background:;">
+  <!--  <a href="#slide-51"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Thin plate regression spline</h2>
+
+<p>The thin plate regression spline can be understood by thinking of an elastic mosquito mesh...</p>
+
+<p>What can we do with an elastic mosquito mesh to fit to an object?</p>
+
+<ul>
+<li>Translate</li>
+<li>Rotate</li>
+<li>Stretch (scale, compression, dilation)</li>
+<li>Shear</li>
+</ul>
+
+<p>Let&#39;s do a practical example...</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-52" style="background:;">
+  <!--  <a href="#slide-52"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Thin plate regression spline</h2>
+
+<h3>Advantage</h3>
+
+<ul>
+<li>More flexible than a polynomial regression</li>
+<li>No knots are needed</li>
+<li>Can be applied to multiple variables at once</li>
+<li>Computationally efficient... ish</li>
+</ul>
+
+<h3>Disadvantage</h3>
+
+<ul>
+<li>Interpreting the meaning of each thin plate spline is challenging</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-53" style="background:;">
+  <!--  <a href="#slide-53"></a> -->
+  <hgroup>
+    <h1>Generalized additive model</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>On our data a thin plate regression spline results in</p>
+
+<p><img src="assets/fig/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-54" style="background:;">
+  <!--  <a href="#slide-54"></a> -->
+  <hgroup>
+    <h1>Model comparison</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Out of these models, which one is the best?</p>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_absence/thinking-face_1f914.png" height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-55" style="background:;">
+  <!--  <a href="#slide-55"></a> -->
+  <hgroup>
+    <h1>Model comparison</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Out of these model, which one is the best?</p>
+
+<p>We can use a pseudo-\(R^2\) to do this... Let&#39;s use Tjur&#39;s pseudo-\(R^2\)</p>
+
+<pre><code class="r"># Models
+logit &lt;- glm(y ~ x[,2] + x[,3], family = binomial())
+poly &lt;- glm(y ~ x[,2] + I(x[,2]^2) + I(x[,2]^3) +
+                I(x[,2]^4) + I(x[,2]^5), family = binomial())
+cr5 &lt;- gam(y ~ s(x[,2], fx = TRUE, bs = &quot;cr&quot;, k = 5),
+           family = binomial())
+cr10 &lt;- gam(y ~ s(x[,2], fx = TRUE, bs = &quot;cr&quot;, k = 10),
+            family = binomial())
+tp5 &lt;- gam(y ~ s(x[,2], fx = TRUE, bs = &quot;tp&quot;, k = 5),
+           family = binomial())
+tp10 &lt;- gam(y ~ s(x[,2], fx = TRUE, bs = &quot;tp&quot;, k = 10),
+            family = binomial())
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-56" style="background:;">
+  <!--  <a href="#slide-56"></a> -->
+  <hgroup>
+    <h1>Model comparison</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Prediction
+logitPred &lt;- predict(logit, type = &quot;response&quot;)
+polyPred &lt;- predict(poly, type = &quot;response&quot;)
+cr5Pred &lt;- predict(cr5, type = &quot;response&quot;)
+cr10Pred &lt;- predict(cr10, type = &quot;response&quot;)
+tp5Pred &lt;- predict(tp5, type = &quot;response&quot;)
+tp10Pred &lt;- predict(tp10, type = &quot;response&quot;)
+
+# Calculate Tjur&#39;s pseudo-R2
+R2 &lt;- c(tjurR2(y, logitPred),tjurR2(y, polyPred),
+        tjurR2(y, cr5Pred), tjurR2(y, cr10Pred),
+        tjurR2(y, tp5Pred), tjurR2(y, tp10Pred))
+R2
+</code></pre>
+
+<pre><code>## [1] 0.5648442 0.5661367 0.5626427 0.5901714 0.5628846 0.5863466
+</code></pre>
+
+<p>And the winner is, the cubic regression spline with 10 knots...</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-57" style="background:;">
+  <!--  <a href="#slide-57"></a> -->
+  <hgroup>
+    <h1>Model comparison</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r"># Prediction
+logitPred &lt;- predict(logit, type = &quot;response&quot;)
+polyPred &lt;- predict(poly, type = &quot;response&quot;)
+cr5Pred &lt;- predict(cr5, type = &quot;response&quot;)
+cr10Pred &lt;- predict(cr10, type = &quot;response&quot;)
+tp5Pred &lt;- predict(tp5, type = &quot;response&quot;)
+tp10Pred &lt;- predict(tp10, type = &quot;response&quot;)
+
+# Calculate Tjur&#39;s pseudo-R2
+R2 &lt;- c(tjurR2(y, logitPred),tjurR2(y, polyPred),
+        tjurR2(y, cr5Pred), tjurR2(y, cr10Pred),
+        tjurR2(y, tp5Pred), tjurR2(y, tp10Pred))
+R2
+</code></pre>
+
+<pre><code>## [1] 0.5648442 0.5661367 0.5626427 0.5901714 0.5628846 0.5863466
+</code></pre>
+
+<p>And the winner is, the cubic regression spline with 10 knots...</p>
+
+<p>Wrong
+<img src="assets/img/presence_absence/shocked-face-with-exploding-head_1f92f.png" height="70px"></img></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-58" style="background:;">
+  <!--  <a href="#slide-58"></a> -->
+  <hgroup>
+    <h1>Model comparison</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>We need to account for the number of parameter estimated to make a good comparison</p>
+
+<h2>Adjust-\(R^2\)</h2>
+
+<p>\[R^2_a = 1- \frac{n-1}{n - p - 1} (1 - R^2)\]
+\(R^2\) - (pseudo-)coefficient of determination</p>
+
+<p>\(n\) - Number of samples</p>
+
+<p>\(p\) - Number of estimated parameters (<font size = 6 color ="red">not</font> counting the intercept)</p>
+
+<h3><font color ="red">Important</font></h3>
+
+<p>Adjusting a pseudo-\(R^2\) make sense only for a pseudo-\(R^2\) that quantify a measure of variance explained.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-59" style="background:;">
+  <!--  <a href="#slide-59"></a> -->
+  <hgroup>
+    <h1>Model comparison</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>By adjusted Tjur&#39;s pseudo-\(R^2\) we obtain</p>
+
+<pre><code class="r"># Basic information
+n &lt;- length(y)
+p &lt;- c(2, 5, 5, 10, 5, 10)
+names(p) &lt;- c(&quot;logit&quot;, &quot;poly&quot;, &quot;cr5&quot;, &quot;cr10&quot;, &quot;tp5&quot;, &quot;tp10&quot;)
+
+# adjusted Tjur&#39;s pseudo-R2
+1 - (n - 1)/(n - p - 1) * R2
+</code></pre>
+
+<pre><code>##     logit      poly       cr5      cr10       tp5      tp10 
+## 0.4294214 0.4192722 0.4228562 0.3786025 0.4226080 0.3826298
+</code></pre>
+
+<div style='text-align:center;'>
+  <img src="assets/img/presence_absence/face-with-party-horn-and-party-hat_1f973.png" height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-60" style="background:;">
+  <!--  <a href="#slide-60"></a> -->
+  <hgroup>
+    <h1>Using generalized additive models to map species</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Generalized additive models are very appealing because they are designed to account for non-linearity.</p>
+
+<p>However, their great flexibility makes them challenging to use properly.</p>
+
+<h4>A few guidelines to using generalized additive models</h4>
+
+<ul>
+<li>Because thin plate regression spline can be applied to multiple explanatory variables, it can account for non-linear among multiple variable (e.g. space)</li>
+<li>Choosing the right basis function can be challenging
+
+<ul>
+<li>Always think of the ecological problem you have when making this choice</li>
+</ul></li>
+<li>Choosing the right <font color = "blue">number</font> of basis functions can be challenging, here are two options
+
+<ul>
+<li>Using ecological knowledge to make the decision (preferred)</li>
+<li>Using automatically selection procedure such as penalized regression spline</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-61" style="background:;">
+  <!--  <a href="#slide-61"></a> -->
+  <hgroup>
+    <h1>A few more general guidelines to models species</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Always keep in mind your ecological question when building a model</li>
+<li>Every argument is important... go beyond the default options</li>
+<li>Be careful about statistical solutions to ecological problems
+
+<ul>
+<li>e.g. Penalized regression spline can be useful but should not be applied blindly</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="transition" id="slide-62" style="background:;">
+  <!--  <a href="#slide-62"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-63" style="background:;">
+  <!--  <a href="#slide-63"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>A bit of history</h2>
+
+<p>Classification and regression trees have first been proposed by</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/CART_authors.png" height="200px"></img>
+</div>
+
+<p>In a book published in 1984</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/CART_book.jpeg"
+height="150px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-64" style="background:;">
+  <!--  <a href="#slide-64"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>While linear and additive models pass lines through the data to fit it, classification and regression tree&#39;s main goal is to split the data into similar groups. Specifically, the goal of tree modelling is to maximize the homogeneity within the groups</p>
+
+<h2>Classification trees</h2>
+
+<p>A tree modelling approach where the response data to split into groups is a class variable</p>
+
+<h2>Regression trees</h2>
+
+<p>A tree modelling approach where the response data to split into groups is a continuous variable</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-65" style="background:;">
+  <!--  <a href="#slide-65"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>To show visually how it works, let&#39;s focus on the distribution of the American black duck (<em>Anas rubripes</em>)</p>
+
+<p><img src="assets/fig/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" /></p>
+
+<p>and let&#39;s model its distribution using the pixel&#39;s coordinates</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-66" style="background:;">
+  <!--  <a href="#slide-66"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>1. Decide on how to evaluate model group homogeneity</h3>
+
+<p>Within the framework of the <code>rpart</code> R package, this amount to deciding the type of response variable we are dealing with.</p>
+
+<h4>Continuous variable</h4>
+
+<p>The sums of squares is used as a measure of homogeneity</p>
+
+<p>\[\sum_{k=1}^\text{group}\sum_{i=1}^{n_k}\left(y_i-\overline{y}_k\right)^2\]</p>
+
+<p>\(n_k\) - Number of samples in group \(k\)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-67" style="background:;">
+  <!--  <a href="#slide-67"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>1. Decide on how to evaluate model group homogeneity</h3>
+
+<h4>Class variable</h4>
+
+<p>The altered prior loss information criterion is used as a measure of homogeneity</p>
+
+<p>\[\frac{\pi_iL_i}{\sum_j\pi_jL_j}\]
+\(\pi_i\) - Prior probability of class \(i\) to be in a specific class</p>
+
+<p>\(L(i,j)\) - Loss matrix defining how much information is lost by incorrectly classifying class \(i\) as class \(j\).</p>
+
+<p>In our example we will assume that the presence-absence of the American black duck is a class variable</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-68" style="background:;">
+  <!--  <a href="#slide-68"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<p>Recall that this split is done to minimize the amount of information loss</p>
+
+<p><img src="assets/fig/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-69" style="background:;">
+  <!--  <a href="#slide-69"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<p>Continue...</p>
+
+<p><img src="assets/fig/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-70" style="background:;">
+  <!--  <a href="#slide-70"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<p>Continue...</p>
+
+<p><img src="assets/fig/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-71" style="background:;">
+  <!--  <a href="#slide-71"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<p>Continue...</p>
+
+<p><img src="assets/fig/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-72" style="background:;">
+  <!--  <a href="#slide-72"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<p>When do we stop!!!</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/face-with-open-mouth-and-cold-sweat_1f630.png"
+height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-73" style="background:;">
+  <!--  <a href="#slide-73"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<p>When do we stop!!!</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/face-with-open-mouth-and-cold-sweat_1f630.png"
+height="100px"></img>
+</div>
+
+<p>The short answer is... it depends</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/face-with-look-of-triumph_1f624.png"
+height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-74" style="background:;">
+  <!--  <a href="#slide-74"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<h4>Deciding when to stop splitting the data</h4>
+
+<ul>
+<li>We go until each sample is its own group</li>
+</ul>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence/tree_many.pdf"
+height="300px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-75" style="background:;">
+  <!--  <a href="#slide-75"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<h4>Deciding when to stop splitting the data</h4>
+
+<ul>
+<li>We go until each sample is its own group</li>
+<li>We construct a random forest
+
+<ul>
+<li>We construct many of trees, each one with &quot;too many&quot; groups and average over all the trees</li>
+</ul></li>
+<li>We tweak the parameters to select a tree model</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-76" style="background:;">
+  <!--  <a href="#slide-76"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<h4>Random forest</h4>
+
+<p>Advantages</p>
+
+<ul>
+<li>Good prediction ability</li>
+</ul>
+
+<p>Disadventages</p>
+
+<ul>
+<li>Some biais in the result</li>
+<li>Hard to interpret</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-77" style="background:;">
+  <!--  <a href="#slide-77"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<h4>Parameter tweaking</h4>
+
+<p>Advantages</p>
+
+<ul>
+<li>More interpretable</li>
+</ul>
+
+<p>Disadventages</p>
+
+<ul>
+<li>Generally the prediction are not as good as a random forest</li>
+<li>More subjectivity</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-78" style="background:;">
+  <!--  <a href="#slide-78"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>2. Split the data</h3>
+
+<h4>Parameter tweaking</h4>
+
+<ul>
+<li>Minimum number of samples that need to be in a node for it to be split</li>
+<li>Minimum number of sample in any terminal node (leaf)</li>
+<li>Complexity threshold to stop splitting the data</li>
+<li>etc.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-79" style="background:;">
+  <!--  <a href="#slide-79"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<h3>3. A tree!</h3>
+
+<p><img src="assets/fig/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-80" style="background:;">
+  <!--  <a href="#slide-80"></a> -->
+  <hgroup>
+    <h1>Classification and regression trees</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Steps to building a tree model</h2>
+
+<p>But is it a good tree?</p>
+
+<h3>4. Check tree</h3>
+
+<p>Use pseudo-\(R^2\) and/or ROC curves</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Introduction'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Introduction'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Introduction'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Introduction'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Small quiz (what is missing ?)'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Solution to the quiz'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Question to ask yourself when modelling a species'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Question to ask yourself when modelling a species'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Question to ask yourself when modelling a species'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Question to ask yourself when modelling a species'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Question to ask yourself when modelling a species'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Question to ask yourself when modelling a species'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Question to ask yourself when modelling a species'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Species distribution models on presence-absence data for a single species'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Important considerations'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Techniques to model single species presence-absence data'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='A general overview of models properties'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Overview of model for presence-absence data'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Overview of model for presence-absence data'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Overview of model for presence-absence data'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Generalized linear models'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Generalized linear models'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Logistic regression'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Logistic regression'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Checking for model quality'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Checking for model quality'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Logistic regression - Checking for model quality'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Logistic regression - Checking for model quality'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Logistic regression - Checking for model quality'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Logistic regression - Checking for model quality'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Logistic regression - Checking for model quality'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Logistic regression - Checking for model quality'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Logistic regression - Checking for model quality'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Logistic regression - Checking for model quality'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Logistic regression - Checking for model quality'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='Logistic regression - Checking for model quality'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='Generalized additive model'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='Generalized additive model'>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title='Generalized additive model'>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title='Generalized additive model'>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title='Generalized additive model'>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title='Generalized additive model'>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title='Generalized additive model'>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title='Generalized additive model'>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title='Generalized additive model'>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title='Generalized additive model'>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title='Generalized additive model'>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title='Generalized additive model'>
+         49
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=50 title='Generalized additive model'>
+         50
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=51 title='Generalized additive model'>
+         51
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=52 title='Generalized additive model'>
+         52
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=53 title='Generalized additive model'>
+         53
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=54 title='Model comparison'>
+         54
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=55 title='Model comparison'>
+         55
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=56 title='Model comparison'>
+         56
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=57 title='Model comparison'>
+         57
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=58 title='Model comparison'>
+         58
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=59 title='Model comparison'>
+         59
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=60 title='Using generalized additive models to map species'>
+         60
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=61 title='A few more general guidelines to models species'>
+         61
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=62 title='Classification and regression trees'>
+         62
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=63 title='Classification and regression trees'>
+         63
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=64 title='Classification and regression trees'>
+         64
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=65 title='Classification and regression trees'>
+         65
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=66 title='Classification and regression trees'>
+         66
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=67 title='Classification and regression trees'>
+         67
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=68 title='Classification and regression trees'>
+         68
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=69 title='Classification and regression trees'>
+         69
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=70 title='Classification and regression trees'>
+         70
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=71 title='Classification and regression trees'>
+         71
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=72 title='Classification and regression trees'>
+         72
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=73 title='Classification and regression trees'>
+         73
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=74 title='Classification and regression trees'>
+         74
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=75 title='Classification and regression trees'>
+         75
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=76 title='Classification and regression trees'>
+         76
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=77 title='Classification and regression trees'>
+         77
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=78 title='Classification and regression trees'>
+         78
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=79 title='Classification and regression trees'>
+         79
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=80 title='Classification and regression trees'>
+         80
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="./libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="./libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
