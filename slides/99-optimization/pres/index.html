@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Integrative project</title>
+  <title>Day 5. Model optimization</title>
   <meta charset="utf-8">
-  <meta name="description" content="Integrative project">
+  <meta name="description" content="Day 5. Model optimization">
   <meta name="author" content="Dominique Gravel">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -37,8 +37,8 @@
     <img src="assets/img/logo.png">
   </aside>
   <hgroup class="auto-fadein">
-    <h1>Integrative project</h1>
-    <h2>https://econumuds.github.io/BIO109/cours1/</h2>
+    <h1>Day 5. Model optimization</h1>
+    <h2></h2>
     <p>Dominique Gravel<br/>Laboratoire d'écologie intégrative</p>
   </hgroup>
   <article></article>
@@ -54,18 +54,14 @@
     <slide class="" id="slide-1" style="background:;">
   <!--  <a href="#slide-1"></a> -->
   <hgroup>
-    <h1>Integrative project</h1>
+    <h1>Optimization</h1>
   </hgroup>
   <article data-timings="">
-    <h2>Objective : evaluate the structural uncertainty in predictions of biodiversity under climate change in Québec.</h2>
+    <h2>Finding equilibrium solution of a system of differential equations</h2>
 
-<ol>
-<li>Macroecological model of bird species richness distribution</li>
-<li>Collection of species distribution models</li>
-<li>Joint species distribution models</li>
-<li>State &amp; transition model for forest habitats</li>
-<li>Species distribution models constrained by habitat availability</li>
-</ol>
+<div style='text-align:center;'>
+<img src="assets/img/RM_model.png" width="500px"></img>
+</div>
 
   </article>
   <!-- Presenter Notes -->
@@ -73,16 +69,14 @@
 <slide class="" id="slide-2" style="background:;">
   <!--  <a href="#slide-2"></a> -->
   <hgroup>
-    <h1>Input data</h1>
+    <h1>Optimization</h1>
   </hgroup>
   <article data-timings="">
-    <ul>
-<li>Bird occurrence data from GBIF on a 10km raster</li>
-<li>Bioclimatic variables</li>
-<li>Spatial coordinates</li>
-<li>Current forest cover type</li>
-<li>Climate change projections for 2085-2100</li>
-</ul>
+    <h2>Finding maximum likelihood estimates of a statistical model</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/regression.png" width="500px"></img>
+</div>
 
   </article>
   <!-- Presenter Notes -->
@@ -90,22 +84,14 @@
 <slide class="" id="slide-3" style="background:;">
   <!--  <a href="#slide-3"></a> -->
   <hgroup>
-    <h1>Day 1. Phenomenological model</h1>
+    <h1>Optimization</h1>
   </hgroup>
   <article data-timings="">
-    <h2>Objective : use a phenomenological model of bird species richness to predict future changes in biodiversity distribution across Québec.</h2>
+    <h2>Solution to complex management problems</h2>
 
-<p>Steps : </p>
-
-<ol>
-<li>Prepare the data</li>
-<li>Decide which statistical model to use</li>
-<li>Decide which explanatory variables to pick</li>
-<li>Run the statistical analysis</li>
-<li>Project species richness under future climatic conditions</li>
-<li>Evaluate biodiversity changes and illustrate the results</li>
-<li>Identify assumptions and limits to the modeling approach</li>
-</ol>
+<div style='text-align:center;'>
+<img src="assets/img/metapop.png" width="450px"></img>
+</div>
 
   </article>
   <!-- Presenter Notes -->
@@ -113,22 +99,15 @@
 <slide class="" id="slide-4" style="background:;">
   <!--  <a href="#slide-4"></a> -->
   <hgroup>
-    <h1>Day 2. Species distribution models</h1>
+    <h1>Objectives</h1>
   </hgroup>
   <article data-timings="">
-    <h2>Objective : use species distribution models of species richness to predict future changes in biodiversity distribution across Québec</h2>
+    <p>Give an overview of the diversity of techniques and approaches</p>
 
-<p>Steps :</p>
-
-<ol>
-<li>Decide conditions for running SDMs</li>
-<li>Evaluate models for every species</li>
-<li>Compute the expected species richness and compare it to observations</li>
-<li>Run climate change scenario to evaluate future species distribution</li>
-<li>Compute the expected species richness</li>
-<li>Evaluate biodiversity changes and illustrate the results </li>
-<li>Identify assumptions and limits to the modeling approach</li>
-</ol>
+<ul>
+<li>Formulate a problem to maximize</li>
+<li>Find maximum values by simulated annealing</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -136,21 +115,12 @@
 <slide class="" id="slide-5" style="background:;">
   <!--  <a href="#slide-5"></a> -->
   <hgroup>
-    <h1>Day 3. Joint Species Distribution models</h1>
+    <h1>A clasic from high scool maths</h1>
   </hgroup>
   <article data-timings="">
-    <h2>Objective : use joint species distribution models of species richness to predict future changes in biodiversity distribution across Québec</h2>
-
-<ol>
-<li>Decide conditions for running JSDM</li>
-<li>Evaluate the model </li>
-<li>Compute the expected species richness and compare it to observations</li>
-<li>Run climate change scenario to evaluate future species distribution</li>
-<li>Compute the expected species richness</li>
-<li>Evaluate biodiversity changes and illustrate the results </li>
-<li>Interprete the covariance matrix </li>
-<li>Identify assumptions and limits to the modeling approach</li>
-</ol>
+    <div style='text-align:center;'>
+<img src="assets/img/polynomial.png" width="750px"></img>
+</div>
 
   </article>
   <!-- Presenter Notes -->
@@ -158,20 +128,17 @@
 <slide class="" id="slide-6" style="background:;">
   <!--  <a href="#slide-6"></a> -->
   <hgroup>
-    <h1>Day 4. Spatial modeling</h1>
+    <h1>Many algorithms</h1>
   </hgroup>
   <article data-timings="">
-    <h2>Objective : use a state and transition model to project future distribution of temperate forests across Québec</h2>
-
-<ol>
-<li>Run the model under actual climatic conditions to get starting conditions</li>
-<li>Run the model with simulated climate change</li>
-<li>Evaluate biodiversity changes and illustrate the results</li>
-<li>Identify assumptions and limits to the modeling approach</li>
-</ol>
-
-<ul>
-<li>if time allows, modify the source code to account for different dispersal scenarios and perform a sensitivity analysis</li>
+    <ul>
+<li>Brute force/direct search</li>
+<li>Derivative-based methods</li>
+<li>Nelder-mean (simplex)</li>
+<li>Genetic algorithm</li>
+<li>Simulated annealing</li>
+<li>Monte Carlo Markov Chain</li>
+<li>Approximate Bayesian Computing</li>
 </ul>
 
   </article>
@@ -180,19 +147,359 @@
 <slide class="" id="slide-7" style="background:;">
   <!--  <a href="#slide-7"></a> -->
   <hgroup>
-    <h1>Day 5. Model integration</h1>
+    <h1>Which one to pick ?</h1>
   </hgroup>
   <article data-timings="">
-    <h2>Objective : develop a hybrid model combining the state and transition model and SDMs to project future bird distribution accounting for spatial mismatch of forest composition</h2>
+    <ul>
+<li>The equation to optimize</li>
+<li>The size of the dataset</li>
+<li>Number of parameters</li>
+<li>Optimization surface</li>
+<li>Area for the optimal solution or precise value ?</li>
+<li>Single solution or a distribution of good solutions ?</li>
+</ul>
 
-<ol>
-<li>Run SDMs for every species accounting for the forest type</li>
-<li>Couple the state and transition model and SDMs to predict the expected bird distribution conditional on the state of the forest</li>
-<li>Run the model under climate change scenario</li>
-<li>Evaluate biodiversity changes and illustrate the results</li>
-<li>Identify assumptions and limits to the modeling approach</li>
-<li>Compare the expected biodiversity changes using models from days 1-5 and evaluate the structural uncertainty </li>
-</ol>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-8" style="background:;">
+  <!--  <a href="#slide-8"></a> -->
+  <hgroup>
+    <h1>Cost function</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>All methods do have in common a function to optimize</h2>
+
+<ul>
+<li>The function takes parameters as arguments and return a single value to either maximize or minimize</li>
+<li>Parameters may be elements in an equation (e.g. regression coefficients) or any other condition we want to change (e.g. which habitat to protect)</li>
+<li>Value to optimize can be of any kind : R2, likelihood, residual error, abundance, occupancy, cost etc....</li>
+<li>All methods do have in common that they vary the input parameters and evaluate if the new parameters improve the result </li>
+<li>Methods differ in i) the way they propose candidate parameters and ii) how they accept/reject propositions</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-9" style="background:;">
+  <!--  <a href="#slide-9"></a> -->
+  <hgroup>
+    <h1>The problem to solve</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Find the value of X that minimizes the polynomial </p>
+
+<div style='text-align:center;'>
+$Y = 1 + 2X + 3X^2$
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-10" style="background:;">
+  <!--  <a href="#slide-10"></a> -->
+  <hgroup>
+    <h1>The problem to solve</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>For such a simple problem, we simply have to take the derivative and solve it for </p>
+
+<div style='text-align:center;'>
+$dY/dX = 0$
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-11" style="background:;">
+  <!--  <a href="#slide-11"></a> -->
+  <hgroup>
+    <h1>The problem to solve</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>But imagine if the surface looks like</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/surface.png" width="500px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-12" style="background:;">
+  <!--  <a href="#slide-12"></a> -->
+  <hgroup>
+    <h1>The problem to solve</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Another solution may be to try bunch of values (random or regularly spaced) and pick the best. </li>
+<li>The problem is that we&#39;ll never have the certainty that it&#39;s the best solution.</li>
+<li>May be very inefficient for problems with a lot of parameters</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-13" style="background:;">
+  <!--  <a href="#slide-13"></a> -->
+  <hgroup>
+    <h1>Simulated annealing</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/SA.jpeg" width="750px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-14" style="background:;">
+  <!--  <a href="#slide-14"></a> -->
+  <hgroup>
+    <h1>Simulated annealing</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>The name of the method is coming from metallurgy, by analogy to the movement of atoms in a hot piece of metal as it cools down. Simulated annealing interprets cooling as a slow decrease in the probability of accepting a bad proposition of parameter values as it explores the solution space. Accepting worse solutions is a fundamental property of the method which allows an extensive search of the solution space and avoid getting stuck on local optima. The method is an adaptation of the Metropolis–Hastings algorithm.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-15" style="background:;">
+  <!--  <a href="#slide-15"></a> -->
+  <hgroup>
+    <h1>Core principle</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Accept the candidate parameter value if it improves the solution</p>
+
+<p>Accept a wrong candidate parameter value with probability</p>
+
+<div style='text-align:center;'>
+    $\rho = exp(\Delta h/T_t)$
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-16" style="background:;">
+  <!--  <a href="#slide-16"></a> -->
+  <hgroup>
+    <h1>Pseudo code</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>DEFINE Function to optimize h(X)
+DEFINE Sampling function s(X)
+DEFINE Temperature sequence T(steps)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-17" style="background:;">
+  <!--  <a href="#slide-17"></a> -->
+  <hgroup>
+    <h1>Pseudo code</h1>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>REPEAT
+    DRAW sample X1 from s(X0)
+    EVALUATE function h(X1)
+    COMPARE diff = h(X1) - h(X0)
+    IF diff &gt; 0 ACCEPT
+    ELSE
+        CALCULATE acceptance probability p = exp(diff_h\T)
+        DRAW value P from random uniform on (0,1)
+            IF P &lt; p
+               accept X
+            ELSE
+                reject X
+    UPDATE temperature using T(step)
+UNTIL nsteps is reached
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-18" style="background:;">
+  <!--  <a href="#slide-18"></a> -->
+  <hgroup>
+    <h1>Exercise 1</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Find the value of X that minimizes the polynomial </p>
+
+<div style='text-align:center;'>
+$Y = 1 + 2X + 3X^2$
+</div>
+
+<p>Tip : build a modular code with distinct functions so that it could easily be adapted to another problem </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-19" style="background:;">
+  <!--  <a href="#slide-19"></a> -->
+  <hgroup>
+    <h1>Exercise 2</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Imagine that you have to create a network of protected areas in a region where there is a metapopulation of an endangered frog. You have a limited amount of money to buy only 10 out of the 25 remaining forest fragments where the species could occur. Which one would you pick ?</h2>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-20" style="background:;">
+  <!--  <a href="#slide-20"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Create a random spatial network</h2>
+
+<pre><code class="r">n = 25
+r = 0.5
+XY = cbind(runif(n), runif(n))
+distMat = as.matrix(dist(XY, method = &#39;euclidean&#39;, upper = T, diag = T))
+adjMat = matrix(0, nr = n, nc = n)
+adjMat[distMat &lt; r] = 1
+diag(adjMat) = 0
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-21" style="background:;">
+  <!--  <a href="#slide-21"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Plot the spatial network</h2>
+
+<pre><code class="r">dev.new(height = 11, width = 12)
+par(mar=c(5,6,2,1))
+plot(XY[,1],XY[,2],xlab = &quot;X&quot;, ylab = &quot;Y&quot;,cex.lab = 1.5, cex.axis = 1.25,cex = A, pch = 19)
+adjVec = stack(as.data.frame(adjMat))[,1]
+XX = expand.grid(XY[,1],XY[,1])
+YY = expand.grid(XY[,2],XY[,2])
+XX = subset(XX,adjVec==1)
+YY = subset(YY,adjVec==1)
+arrows(x0 = XX[,1],x1=XX[,2],y0 = YY[,1], y1 = YY[,2], length = 0,lwd = 0.1)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-22" style="background:;">
+  <!--  <a href="#slide-22"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Plot the spatial network</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/metapop.png" width="500px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-23" style="background:;">
+  <!--  <a href="#slide-23"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Parameters</h2>
+
+<ul>
+<li>c     : colonization rate (scalar)</li>
+<li>e     : extinction rate (scalar)</li>
+<li>adjMat: adjacency matrix </li>
+<li>px    : vector of occupancies</li>
+<li>d     : vector of destroyed patches</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-24" style="background:;">
+  <!--  <a href="#slide-24"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Main model</h2>
+
+<pre><code class="r">Levins = function(p,adjMat,c,e,d) {
+    # Colonization rate
+    C = p%*%(c*adjMat)
+    # Destroyed habitats have a 0 colonization rate
+    C[d==1] = 0
+    # Difference between candidate p and the solution 
+    px = C/(C + e) - p
+    return(px)
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-25" style="background:;">
+  <!--  <a href="#slide-25"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Function to extract equilibrium occupancies</h2>
+
+<pre><code class="r">library(rootSolve)
+get_px = function(adjMat,c,e,d) {
+    # Function to optimize
+    p_function = function(p) Levins(p,adjMat,c,e,d)
+    # Initial conditions
+    Start = numeric(n) + 1 - e/c 
+    # Extract roots
+    multiroot(p_function, start = Start, positive=TRUE)[[1]]
+}
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-26" style="background:;">
+  <!--  <a href="#slide-26"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Example</h2>
+
+<pre><code class="r">d = numeric(n)
+d[1:10] = 1
+eq_px = get_px(adjMat,c=0.12,e=0.1,d=d)
+RK = rank(eq_px)
+col = heat.colors(n = n)
+vec.col = numeric(n)
+for(i in 1:n) vec.col[i] = col[RK[i]]
+vec.col[d==1] = &quot;black&quot;
+points(XY[,1],XY[,2],pch=21,bg=vec.col,cex=2)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-27" style="background:;">
+  <!--  <a href="#slide-27"></a> -->
+  <hgroup>
+    <h1>Levins metapopulation model</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/metapop_protected.png" width="500px"></img>
+</div>
 
   </article>
   <!-- Presenter Notes -->
@@ -203,44 +510,164 @@
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Integrative project'>
+        data-slide=1 title='Optimization'>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Input data'>
+        data-slide=2 title='Optimization'>
          2
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='Day 1. Phenomenological model'>
+        data-slide=3 title='Optimization'>
          3
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Day 2. Species distribution models'>
+        data-slide=4 title='Objectives'>
          4
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Day 3. Joint Species Distribution models'>
+        data-slide=5 title='A clasic from high scool maths'>
          5
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Day 4. Spatial modeling'>
+        data-slide=6 title='Many algorithms'>
          6
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Day 5. Model integration'>
+        data-slide=7 title='Which one to pick ?'>
          7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Cost function'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='The problem to solve'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='The problem to solve'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='The problem to solve'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='The problem to solve'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Simulated annealing'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Simulated annealing'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Core principle'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Pseudo code'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Pseudo code'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Exercise 1'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Exercise 2'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Levins metapopulation model'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Levins metapopulation model'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Levins metapopulation model'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Levins metapopulation model'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Levins metapopulation model'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Levins metapopulation model'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Levins metapopulation model'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Levins metapopulation model'>
+         27
       </a>
     </li>
   </ul>

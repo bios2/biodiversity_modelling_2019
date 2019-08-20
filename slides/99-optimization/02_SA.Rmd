@@ -2,11 +2,10 @@
 ---
 
 # Optimization 
-
 ## Finding equilibrium solution of a system of differential equations
 
 <div style='text-align:center;'>
-<img src="assets/img/RM_model.pdf" width="750px"></img>
+<img src="assets/img/RM_model.png" width="500px"></img>
 </div>
 
 ---
@@ -16,7 +15,7 @@
 ## Finding maximum likelihood estimates of a statistical model
 
 <div style='text-align:center;'>
-<img src="assets/img/regression.pdf" width="750px"></img>
+<img src="assets/img/regression.png" width="500px"></img>
 </div>
 
 ---
@@ -26,7 +25,7 @@
 ## Solution to complex management problems 
 
 <div style='text-align:center;'>
-<img src="assets/img/protected_areas.pdf" width="750px"></img>
+<img src="assets/img/metapop.png" width="450px"></img>
 </div>
 
 ---
@@ -40,19 +39,10 @@ Give an overview of the diversity of techniques and approaches
 
 ---
 
-# Content
-
-- Overview of optimization techniques
-- Simulated annealing : how it works
-- Finding roots of a rough parameter surface
-- Optimize location of protected areas
-
----
-
 # A clasic from high scool maths
 
 <div style='text-align:center;'>
-<img src="assets/img/polynomial.pdf" width="750px"></img>
+<img src="assets/img/polynomial.png" width="750px"></img>
 </div>
 
 ---
@@ -81,8 +71,7 @@ Give an overview of the diversity of techniques and approaches
 ---
 
 # Cost function
-
-- All methods do have in common a function to optimize
+## All methods do have in common a function to optimize
 - The function takes parameters as arguments and return a single value to either maximize or minimize
 - Parameters may be elements in an equation (e.g. regression coefficients) or any other condition we want to change (e.g. which habitat to protect)
 - Value to optimize can be of any kind : R2, likelihood, residual error, abundance, occupancy, cost etc....
@@ -95,13 +84,19 @@ Give an overview of the diversity of techniques and approaches
 
 Find the value of X that minimizes the polynomial 
 
+<div style='text-align:center;'>
 $Y = 1 + 2X + 3X^2$
+</div>
 
 ---
 
 # The problem to solve  
 
-For such a simple problem, we simply have to take the derivative and solve it for $dY/dX = 0$
+For such a simple problem, we simply have to take the derivative and solve it for 
+
+<div style='text-align:center;'>
+$dY/dX = 0$
+</div>
 
 ---
 
@@ -110,7 +105,7 @@ For such a simple problem, we simply have to take the derivative and solve it fo
 ## But imagine if the surface looks like  
 
 <div style='text-align:center;'>
-<img src="assets/img/surface.pdf" width="750px"></img>
+<img src="assets/img/surface.png" width="500px"></img>
 </div>
 
 ---
@@ -126,7 +121,7 @@ For such a simple problem, we simply have to take the derivative and solve it fo
 # Simulated annealing 
 
 <div style='text-align:center;'>
-<img src="assets/img/SA.pdf" width="750px"></img>
+<img src="assets/img/SA.jpeg" width="750px"></img>
 </div>
 
 ---
@@ -140,8 +135,6 @@ The name of the method is coming from metallurgy, by analogy to the movement of 
 # Core principle 
 
 Accept the candidate parameter value if it improves the solution
-
-
 
 Accept a wrong candidate parameter value with probability
 
@@ -179,13 +172,16 @@ REPEAT
 	UPDATE temperature using T(step)
 UNTIL nsteps is reached
 ```
+
 ---
 
 # Exercise 1
 
 Find the value of X that minimizes the polynomial 
 
+<div style='text-align:center;'>
 $Y = 1 + 2X + 3X^2$
+</div>
 
 Tip : build a modular code with distinct functions so that it could easily be adapted to another problem 
 
@@ -194,10 +190,6 @@ Tip : build a modular code with distinct functions so that it could easily be ad
 # Exercise 2
 
 ## Imagine that you have to create a network of protected areas in a region where there is a metapopulation of an endangered frog. You have a limited amount of money to buy only 10 out of the 25 remaining forest fragments where the species could occur. Which one would you pick ? 
-
-<div style='text-align:center;'>
-<img src="assets/img/spatial_network.pdf" width="750px"></img>
-</div>
 
 ---
 
@@ -230,7 +222,7 @@ XX = expand.grid(XY[,1],XY[,1])
 YY = expand.grid(XY[,2],XY[,2])
 XX = subset(XX,adjVec==1)
 YY = subset(YY,adjVec==1)
-arrows(x0 = XX[,1],x1=XX[,2],y0 = YY[,1], y1 = YY[,2], length = 0,lwd = 0.1, col = "grey")
+arrows(x0 = XX[,1],x1=XX[,2],y0 = YY[,1], y1 = YY[,2], length = 0,lwd = 0.1)
 ```
 
 ---
@@ -240,7 +232,7 @@ arrows(x0 = XX[,1],x1=XX[,2],y0 = YY[,1], y1 = YY[,2], length = 0,lwd = 0.1, col
 ## Plot the spatial network
 
 <div style='text-align:center;'>
-<img src="assets/img/spatial_network.pdf" width="750px"></img>
+<img src="assets/img/metapop.png" width="500px"></img>
 </div>
 
 ---
@@ -290,6 +282,7 @@ get_px = function(adjMat,c,e,d) {
 	multiroot(p_function, start = Start, positive=TRUE)[[1]]
 }
 ```
+
 ---
 
 # Levins metapopulation model
@@ -314,9 +307,5 @@ points(XY[,1],XY[,2],pch=21,bg=vec.col,cex=2)
 # Levins metapopulation model
 
 <div style='text-align:center;'>
-<img src="assets/img/spatial_network.pdf" width="750px"></img>
+<img src="assets/img/metapop_protected.png" width="500px"></img>
 </div>
-
----
-
-

@@ -1,6 +1,5 @@
 ---
 title       : "Day 5. Model optimization"
-subtitle    : "https://econumuds.github.io/BIO109/cours1/"
 author      : "Dominique Gravel"
 job         : "Laboratoire d'écologie intégrative"
 logo        : "logo.png"
@@ -15,4 +14,3 @@ url:
 license     : by-nc-sa
 assets      :
   css: "https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"
----
