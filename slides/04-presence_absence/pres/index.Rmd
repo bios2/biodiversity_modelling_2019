@@ -752,8 +752,6 @@ What can we do with an elastic mosquito mesh to fit to an object?
 - Stretch (scale, compression, dilation)
 - Shear
 
-Let's do a practical example...
-
 ---
 
 # Generalized additive model
