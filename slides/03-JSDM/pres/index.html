@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day 3. Joint species distribution modelling</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Day 3. Joint species distribution modelling">
+  <meta name="author" content="F. Guillaume Blanchet">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="./libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="./libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/default.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+<link rel=stylesheet href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="./libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="./libraries/frameworks/io2012/js/slides" 
+    src="./libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/logo.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Day 3. Joint species distribution modelling</h1>
+    <h2>https://github.com/bios2/biodiversity_modelling_2019.git</h2>
+    <p>F. Guillaume Blanchet<br/>Laboratoire d'écologie intégrative</p>
+  </hgroup>
+  <article></article>
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <!--  <a href="#slide-1"></a> -->
+  <hgroup>
+    <h1>Joint species distribution models (JSDM)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>JSDM are a fairly new groups of models that are emerging in the litterature</p>
+
+<p>In essence they are:</p>
+
+<ul>
+<li>Multivariate (multi-species)</li>
+<li>Relying on a strong statistical basis</li>
+<li>Flexible. That is, they allow for multiple type of data and new questions to be approach</li>
+</ul>
+
+<p>At the moment, they seemed to be more a statistican toy than an ecologist tool.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-2" style="background:;">
+  <!--  <a href="#slide-2"></a> -->
+  <hgroup>
+    <h1>Joint species distribution models (JSDM)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>There are many variant of JSDM</p>
+
+<ul>
+<li>Hierarchical modelling of species community (HMSC)</li>
+<li>Bayesian ordination and regression analysis (boral)</li>
+<li>Generalized Joint Attribute Modeling (gjam)</li>
+<li>Bayesian Community Ecology Analysis</li>
+<li>etc.</li>
+</ul>
+
+<h2>Note</h2>
+
+<p>Although many of these variant are Bayesian, this is not a necessity for JSDM</p>
+
+<p>Today we will focus on HMSC... It is Bayesian</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-3" style="background:;">
+  <!--  <a href="#slide-3"></a> -->
+  <hgroup>
+    <h1>Frequentist and Bayesian modelling</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Frequentist</h2>
+
+<p>Want to find the best model parameter(s) for the data at hand</p>
+
+<p>\[\text{Likelihood}\hspace{1.5cm}P(\text{Data}|\text{Model})\]</p>
+
+<h3>They need data</h3>
+
+<p>They are interested in maximizing the Likelihood</p>
+
+<p>This can be done using</p>
+
+<ul>
+<li>Simulated annealing</li>
+<li>The Nelder-Mead Simplex</li>
+<li>Minimizing the sums of squares</li>
+<li>etc.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-4" style="background:;">
+  <!--  <a href="#slide-4"></a> -->
+  <hgroup>
+    <h1>Frequentist and Bayesian modelling</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Bayesian</h2>
+
+<p>Want to find how good the model parameter(s) are given some data</p>
+
+<p>\[\text{Posterior}\hspace{1.5cm}P(\text{Model}|\text{Data})\]</p>
+
+<h3>They need data and prior information</h3>
+
+<p>They are intered in the posterior distribution</p>
+
+<p>How they do this:</p>
+
+<p>\[\underbrace{P(\text{Model}|\text{Data})}_\text{Posterior}\propto \underbrace{P(\text{Data}|\text{Model})}_\text{Likelihood}\underbrace{P(\text{Model})}_\text{Prior}\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-5" style="background:;">
+  <!--  <a href="#slide-5"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Since the 2011 paper by Ovaskainen and Soininen, there has been a number of developments within HMSC, most of which are available in the <code>HMSC</code> R package.</p>
+
+<p>Today, we will focus only on a few of these developments</p>
+
+<p>Let&#39;s start with the idea propose by Ovaskainen and Soininen (2011) where we have</p>
+
+<p>\(\mathbf{Y}\) - A matrix of sites (rows) by species (columns) that states whether is each species occurs (1) or not (0) across the sites</p>
+
+<p>\(\mathbf{X}\) - A matrix of sites (rows) by environment or habitat characteristics (columns)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-6" style="background:;">
+  <!--  <a href="#slide-6"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/HMSC1.png" height="550px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-7" style="background:;">
+  <!--  <a href="#slide-7"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/HMSC2.png" height="550px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-8" style="background:;">
+  <!--  <a href="#slide-8"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/HMSC3.png" height="550px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-9" style="background:;">
+  <!--  <a href="#slide-9"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/HMSC4.png" height="550px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-10" style="background:;">
+  <!--  <a href="#slide-10"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>What this model does is to use the information from all the species available to better estimate each species.</p>
+
+<h2>How good is this approach?</h2>
+
+<p>They performed a simulation where:</p>
+
+<ul>
+<li>The probability of occurrence of a common species increases with the value of an explanatory variable increases</li>
+<li>The probability of occurrence of a rare species increases importantly with the value of an explanatory variable increases</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-11" style="background:;">
+  <!--  <a href="#slide-11"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How good is this approach?</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/Ovaskainen_Soininen_Fig1.png" height="500px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-12" style="background:;">
+  <!--  <a href="#slide-12"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>A few particularity about this approach</h2>
+
+<ul>
+<li>To get unbiased parameter estimation we should account for <font size = 6 color = "blue">all</font> the species that <font size = 6 color = "blue">should</font> be present in the studied community.</li>
+<li>No information on species interaction is considered</li>
+<li>It can be applied to data where there are many species and relatively few samples</li>
+<li>It assumes each species reacts to the environment on average the same way... with a diffence variance/covariance</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-13" style="background:;">
+  <!--  <a href="#slide-13"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How are the parameters estimated in practice?</h2>
+
+<p>Although Bayesian models can be estimated analytically (... that is by solving the math!), it can become challenging to this with more complex models.</p>
+
+<p>A solution is to use Markov chain Monte Carlo (MCMC).</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-14" style="background:;">
+  <!--  <a href="#slide-14"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>Markov chain Monte Carlo methods are a group of sampling procedure that can be used to estimate model parameters.</p>
+
+<h2>Example of MCMC methods</h2>
+
+<ul>
+<li>Rejection sampling</li>
+<li>Metropolis-Hastings algorithm</li>
+<li>Gibbs sampling</li>
+<li>etc.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-15" style="background:;">
+  <!--  <a href="#slide-15"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Advantages of MCMC</h2>
+
+<ul>
+<li>It allows to approach very (!) complex model structure</li>
+<li>Confidence intervals are obtained for free !</li>
+</ul>
+
+<h2>Disadvantages of MCMC</h2>
+
+<ul>
+<li>It is time consumming to estimate a model</li>
+<li>It requires a lot of computer</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-16" style="background:;">
+  <!--  <a href="#slide-16"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Assumption of MCMC</h2>
+
+<ul>
+<li>All potential parameter combinations can be reached from all other parameter combination</li>
+<li>After enough iterations the chain will converges to a stationary distribution</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-17" style="background:;">
+  <!--  <a href="#slide-17"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Assumption of MCMC</h2>
+
+<ul>
+<li>All potential parameter combinations can be reached from all other parameter combination</li>
+<li>After enough iterations the chain will converges to a stationary distribution</li>
+</ul>
+
+<p>What does enough iterations mean? What is a stationary distribution? What does &quot;converge&quot; mean?</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/thinking-face_1f914.png" height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-18" style="background:;">
+  <!--  <a href="#slide-18"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>How many iterations is enough...</h2>
+
+<h3>A rough procedure</h3>
+
+<ol>
+<li>Perform a pilot run for a reduced number of steps (10 to 100) and measure the time it takes</li>
+<li>Decide on a number of steps to run the algorithm to obtain a result in a reasonable amount of time</li>
+<li>Run the algorithm again !</li>
+<li>Study the chain visually</li>
+</ol>
+
+<h3>A more statistical way - The Raftery-Lewis diagnostic</h3>
+
+<p>It relies on a pilot run to estimate the number of steps to be carried out.</p>
+
+<p>It is implemented in the <code>raftery.diag</code> function of the <code>coda</code> R package</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-19" style="background:;">
+  <!--  <a href="#slide-19"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Good practice</h2>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/trace-1.pdf" height="500px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-20" style="background:;">
+  <!--  <a href="#slide-20"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Thinning</h2>
+
+<p>Thinning is essentially subsampling</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/thining2-1.pdf" height="165px"></img>
+</div>
+
+<p>If we ran the same MCMC as above but instead for 50000 steps and we save \(\theta\) at every 10 steps, we obtain</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/thining2-2.pdf" height="165px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-21" style="background:;">
+  <!--  <a href="#slide-21"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Burn-in</h2>
+
+<p>Burn-in is throwing away some iterations at the beginning of the MCMC run</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/burnin1-1.pdf" height="165px"></img>
+</div>
+
+<p>After burn-in, we obtain</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/burnin2-1.pdf" height="165px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-22" style="background:;">
+  <!--  <a href="#slide-22"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Convergence</h2>
+
+<p>A way to check for convergence is to rerun the same MCMC multiple times but using different starting values (i.e. different chains)</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/multChain-1.pdf" height="165px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-23" style="background:;">
+  <!--  <a href="#slide-23"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Convergence</h2>
+
+<h3>Geweke convergence diagnostic</h3>
+
+<p>It compares two sections of the same chain</p>
+
+<p>It is, in essence, a two sample \(t\) test of mean with unequal variance</p>
+
+<p>It is implemented in the <code>geweke.diag</code> function of the <code>coda</code> R package</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-24" style="background:;">
+  <!--  <a href="#slide-24"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Convergence</h2>
+
+<h3>Gelman-Rubin convergence diagnostic</h3>
+
+<p>It compares multiple chains</p>
+
+<p>it is a corrected ratio of the pooled variance of all chains with the within variance of each chain...</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/face-with-uneven-eyes-and-wavy-mouth_1f974.png" height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-25" style="background:;">
+  <!--  <a href="#slide-25"></a> -->
+  <hgroup>
+    <h1>Markov chain Monte Carlo (MCMC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>Convergence</h2>
+
+<h3>Gelman-Rubin convergence diagnostic</h3>
+
+<p>It compares multiple chains</p>
+
+<p>it is a corrected ratio of the pooled variance of all chains with the within variance of each chain...</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/face-with-uneven-eyes-and-wavy-mouth_1f974.png" height="100px"></img>
+</div>
+
+<p>Essentially it is a special type of ANOVA</p>
+
+<p>It is implemented in the <code>gelman.diag</code> function of the <code>coda</code> R package</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-26" style="background:;">
+  <!--  <a href="#slide-26"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>\[\text{logit}(P(\mathbf{Y} = 1)) = \mathbf{X}\mathbf{B}^T\]
+where
+\[\mathbf{B} \sim {\cal N}(\boldsymbol{\mu},\mathbf{V})\]</p>
+
+<p>Can we do better?</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/thinking-face_1f914.png" height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-27" style="background:;">
+  <!--  <a href="#slide-27"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/Warton_et_al_2015.png" height="500px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-28" style="background:;">
+  <!--  <a href="#slide-28"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>\[\text{logit}(P(\mathbf{Y} = 1)) = \mathbf{X}\mathbf{B}^T + \boldsymbol{\alpha}\]
+where
+\[\mathbf{B} \sim {\cal N}(\boldsymbol{\mu},\mathbf{V})\]
+\[\boldsymbol{\alpha} \sim {\cal N}(0,\mathbf{\Sigma})\]</p>
+
+<p>\(\boldsymbol{\alpha}\) - Random effect on the species</p>
+
+<p>\(\mathbf{\Sigma}\) - Species by species covariance matrix</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-29" style="background:;">
+  <!--  <a href="#slide-29"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <p>\[\text{logit}(P(\mathbf{Y} = 1)) = \mathbf{X}\mathbf{B}^T + \boldsymbol{\alpha}\]
+where
+\[\mathbf{B} \sim {\cal N}(\boldsymbol{\mu},\mathbf{V})\]
+\[\boldsymbol{\alpha} \sim {\cal N}(0,\mathbf{\Sigma})\]</p>
+
+<p>\(\boldsymbol{\alpha}\) - Random effect on the species</p>
+
+<p>\(\mathbf{\Sigma}\) - Species by species covariance matrix</p>
+
+<p>In less technical words, we can include a random effect on the species to account for the variance in the species data unexplained by the environmental variables.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-30" style="background:;">
+  <!--  <a href="#slide-30"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<p>The problem with this type of model is that it is very (!) hard to estimate \(\mathbf{\Sigma}\)</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-31" style="background:;">
+  <!--  <a href="#slide-31"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<p>The problem with this type of model is that it is very (!) hard to estimate \(\mathbf{\Sigma}\)</p>
+
+<p>However, there is a mathematical trick</p>
+
+<p>We can decompose \(\mathbf{\Sigma}\) as</p>
+
+<p>\[\mathbf{\Sigma} = \mathbf{\Sigma}_\text{signal} + \mathbf{\Sigma}_\text{noise}\]
+and further with matrix decomposition</p>
+
+<p>\[\mathbf{\Sigma} = \mathbf{\Lambda}\mathbf{\Lambda}^T + \mathbf{\Sigma}_\text{noise}\]</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-32" style="background:;">
+  <!--  <a href="#slide-32"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<p>Using the trick in the previous slide, we can rewrite</p>
+
+<p>\[\text{logit}(P(\mathbf{Y} = 1)) = \mathbf{X}\mathbf{B}^T + \boldsymbol{\alpha}\]</p>
+
+<p>to</p>
+
+<p>\[\text{logit}(P(\mathbf{Y} = 1)) = \mathbf{X}\mathbf{B}^T + \mathbf{H}\mathbf{\Lambda}^T\]</p>
+
+<p>\(\mathbf{H}\) - Latent variables</p>
+
+<p>\(\mathbf{\Lambda}\) - Parameters associated to the latent variables</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-33" style="background:;">
+  <!--  <a href="#slide-33"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<h3>How are these weird parameters calculated?</h3>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/face-with-open-mouth-and-cold-sweat_1f630.png" height="100px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-34" style="background:;">
+  <!--  <a href="#slide-34"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<h3>How are these weird parameters calculated?</h3>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/face-with-open-mouth-and-cold-sweat_1f630.png" height="100px"></img>
+</div>
+
+<p>Let&#39;s wave this off as voodoo statistical magic for now... and let&#39;s just say that it is done with a rather complicated Gibbs sampler.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-35" style="background:;">
+  <!--  <a href="#slide-35"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<h3>What do these weird parameters mean?</h3>
+
+<ul>
+<li>Important explanatory variables not accounted for in the model</li>
+<li>Important explanatory variables that are impossible to sample</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-36" style="background:;">
+  <!--  <a href="#slide-36"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<h3>What do these weird parameters mean? - Example</h3>
+
+<p>\[\text{logit}(P(\mathbf{Y} = 1)) = \mathbf{H}\mathbf{\Lambda}^T\]</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/Warton_et_al_2015_FigIIa.png" height="340px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-37" style="background:;">
+  <!--  <a href="#slide-37"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<h3>What do these weird parameters mean? - Example</h3>
+
+<p>\[\text{logit}(P(\mathbf{Y} = 1)) = \mathbf{X}\mathbf{B}^T + \mathbf{H}\mathbf{\Lambda}^T\]</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/Warton_et_al_2015_FigIIb.png" height="340px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-38" style="background:;">
+  <!--  <a href="#slide-38"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<h3>Another (confusing) way to present the result</h3>
+
+<p>\[\mathbf{\Sigma}_\text{signal}  = \mathbf{\Lambda}\mathbf{\Lambda}^T\]</p>
+
+<div style='text-align:center;'>
+<img src="assets/img/presence_absence_multi/Warton_et_al_2015_FigI.png" height="340px"></img>
+</div>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+<slide class="" id="slide-39" style="background:;">
+  <!--  <a href="#slide-39"></a> -->
+  <hgroup>
+    <h1>Hierarchical modelling of species community (HMSC)</h1>
+  </hgroup>
+  <article data-timings="">
+    <h2>With a species-level random effect</h2>
+
+<h3>Another (confusing) way to present the result</h3>
+
+<p>Why is this confusing?</p>
+
+<p>Because it leads us to believe that Latent variables model</p>
+
+<ul>
+<li>Biotic interactions</li>
+<li>Species associations</li>
+</ul>
+
+<p>This is <font size = 6 color = "red">Wrong!</font></p>
+
+<p>Based on the way these results are presented, it may be tempting to make this intellectual jump, but we should not do it.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Joint species distribution models (JSDM)'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Joint species distribution models (JSDM)'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Frequentist and Bayesian modelling'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Frequentist and Bayesian modelling'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Hierarchical modelling of species community (HMSC)'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Hierarchical modelling of species community (HMSC)'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Hierarchical modelling of species community (HMSC)'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Hierarchical modelling of species community (HMSC)'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Hierarchical modelling of species community (HMSC)'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Hierarchical modelling of species community (HMSC)'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Hierarchical modelling of species community (HMSC)'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Hierarchical modelling of species community (HMSC)'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Hierarchical modelling of species community (HMSC)'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Markov chain Monte Carlo (MCMC)'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Markov chain Monte Carlo (MCMC)'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Markov chain Monte Carlo (MCMC)'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Markov chain Monte Carlo (MCMC)'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Markov chain Monte Carlo (MCMC)'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Markov chain Monte Carlo (MCMC)'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='Markov chain Monte Carlo (MCMC)'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Markov chain Monte Carlo (MCMC)'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Markov chain Monte Carlo (MCMC)'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Markov chain Monte Carlo (MCMC)'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='Markov chain Monte Carlo (MCMC)'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='Markov chain Monte Carlo (MCMC)'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Hierarchical modelling of species community (HMSC)'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Hierarchical modelling of species community (HMSC)'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Hierarchical modelling of species community (HMSC)'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='Hierarchical modelling of species community (HMSC)'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Hierarchical modelling of species community (HMSC)'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Hierarchical modelling of species community (HMSC)'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Hierarchical modelling of species community (HMSC)'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Hierarchical modelling of species community (HMSC)'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Hierarchical modelling of species community (HMSC)'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='Hierarchical modelling of species community (HMSC)'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Hierarchical modelling of species community (HMSC)'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='Hierarchical modelling of species community (HMSC)'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='Hierarchical modelling of species community (HMSC)'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='Hierarchical modelling of species community (HMSC)'>
+         39
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="./libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="./libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
