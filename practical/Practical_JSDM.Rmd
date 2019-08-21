@@ -1,0 +1,216 @@
+---
+title: "Practical - Joint species distribution models"
+author: "Biodiversity modelling"
+date: "F.G. Blanchet -- August 19--23, 2019"
+output: pdf_document
+fontsize: 11pt
+classoption: letterpaper
+urlcolor: blue
+---
+
+```{r global_options,include=FALSE}
+knitr::opts_chunk$set(eval=TRUE)
+```
+
+# Introduction
+
+This practical document presents R code for the section of the course regarding models for presence-absence data using multiple species.
+
+Different examples will be given using the course data for each of the approach discuss during the course.
+
+# Load R packages
+
+```{r}
+library(sp)
+library(raster)
+```
+
+# Load the data
+
+```{r, echo = FALSE}
+bird <- readRDS("../Data/Bird/birdAll.RDS")
+climatePresent <- readRDS("../Data/Climate/Present/climate_Present.RDS")
+road <- readRDS("../Data/Road/road_Distance.RDS")
+```
+
+```{r, eval = FALSE}
+bird <- readRDS("birdAll.RDS")
+climatePresent <- readRDS("climate_Present.RDS")
+road <- readRDS("road_Distance.RDS")
+```
+
+# Extract and organize the data
+
+Let's organize the data based on what we learned from logistic regression.
+
+```{r}
+# Pixels within 10 km of roads
+roadDat <- values(road)
+road10 <- which(roadDat < 10000)
+roadSub <- raster(road)
+values(roadSub)[road10] <- values(road)[road10]
+roadSub <- mask(roadSub, climatePresent[[1]])
+locPixRoad <- which(!is.na(values(roadSub)))
+
+# Species data
+spDat <- values(bird)
+spSub <- spDat[locPixRoad,]
+
+# Climate data
+climateAll <- values(climatePresent)
+climateDat <- scale(climateAll)
+climateSub <- climateDat[locPixRoad,]
+colnames(climateSub) <- colnames(climateDat)
+climateSub <- as.data.frame(climateSub)
+
+# Reduce the number of climate variables using a PCA
+library(vegan)
+
+NALoc <- which(is.na(climateDat[,1]))
+climatePCA <- rda(climateDat[-NALoc,], na.rm = TRUE)
+cumsum(eigenvals(climatePCA))/sum(eigenvals(climatePCA))
+
+# The first three PCA axes should do the trick
+climateAxes <- scores(climatePCA,
+                      choices = 1:3,
+                      display = "sites")
+
+# Reorganise the climate data
+climateAxesAll <- matrix(NA, nrow = nrow(climateDat), ncol = 3)
+climateAxesAll[-NALoc,] <- climateAxes
+climateAxesRoad <- climateAxesAll[locPixRoad,]
+climateAxesSub <- climateAxesRoad[-NALoc,]
+colnames(climateAxesSub) <- paste0("PC",1:3)
+
+# Remove NAs from species data
+spNoNA <- spSub[-NALoc,]
+```
+
+# Build HMSC model
+
+To perform hierarchical modelling of species community you need to load the R package `HMSC`.
+
+```{r, warning=FALSE, message = FALSE}
+library(HMSC)
+```
+
+## HMSC using only environmental variables
+
+The first thing to do is to format the data (response and explanatory variables) for it to be used by HMSC.
+
+## Format the data for HMSC
+
+```{r, message = FALSE}
+# Format data for HMSC
+set.seed(12)
+formDat <- as.HMSCdata(Y = spNoNA, X = climateAxesSub)
+```
+
+If you are OK with the weakly informative prior specification, we can run the model. If not, you can specify the priors
+
+```{r}
+priorSpec <- as.HMSCprior(formDat,
+                          family = "probit",
+                          meansParamX = matrix(rep(0, ncol(formDat$X))))
+```
+
+Note that the link function used for presence-absence data is not the logit link but the probit link. The difference between the logit and probit link is minimial. It was decided to implement the probit instead of the logit model because it is simpler to implement within an MCMC framework.
+
+## Run the model
+
+To run the model, we need to decide on how many iterations we should perform, including burn-in and thinning.
+
+```{r,eval = FALSE, echo = TRUE, message = FALSE}
+spClimate <- hmsc(formDat,
+                  priors = priorSpec,
+                  family = "probit",
+                  niter = 2000,
+                  nburn = 1000,
+                  verbose = FALSE)
+```
+
+```{r,eval = TRUE, echo = FALSE, message = FALSE}
+spClimate <- readRDS("spClimate.RDS")
+```
+
+## Check for parameter convergence
+Extract the parameters and format them into an `mcmc` object.
+```{r}
+mcmcParamX <- as.mcmc(spClimate, parameters = "paramX")
+mcmcMeansParamX <- as.mcmc(spClimate, parameters = "meansParamX")
+mcmcVarX <- as.mcmc(spClimate, parameters = "varX")
+```
+
+### Visually
+
+With the number of parameters, this can be long and tedious
+```{r}
+traceplot(mcmcMeansParamX[,1])
+```
+
+### Geweke diagnostic
+
+```{r, fig.align="center"}
+gewekeParamX <- geweke.diag(mcmcParamX,
+                            frac1 = 0.5,
+                            frac2 = 0.5)
+hist(gewekeParamX$z,
+     xlab = "Z-score",
+     main = "Geweke paramX")
+```
+
+```{r, fig.align="center"}
+gewekeMeansParamX <- geweke.diag(mcmcMeansParamX,
+                                 frac1 = 0.5,
+                                 frac2 = 0.5)
+hist(gewekeMeansParamX$z,
+     xlab = "Z-score",
+     main = "Geweke meansParamX")
+```
+
+```{r, fig.align="center"}
+gewekeVarX <- geweke.diag(mcmcVarX,
+                          frac1 = 0.5,
+                          frac2 = 0.5)
+hist(gewekeVarX$z,
+     xlab = "Z-score",
+     main = "Geweke varX")
+```
+
+The MCMC seemed to have converged properly.
+
+# Prediction map
+
+```{r, eval = FALSE}
+formPredData <- as.HMSCdata(X = climateAxes)
+pred <- predict(spClimate,
+                newdata = formPredData,
+                type = "response")
+```
+
+```{r, eval= FALSE, echo = FALSE}
+pred <- matrix(NA, nrow = nrow(climateAxes),
+               ncol = ncol(spClimate$data$Y))
+
+start <- seq(1,nrow(climateAxes), by = 1000)
+end <- seq(1000,nrow(climateAxes), by = 1000)
+end <- c(end, nrow(climateAxes))
+
+for(i in 1:length(start)){
+  formPredData <- as.HMSCdata(X = climateAxes[start[i]:end[i],])
+  pred[start[i]:end[i],] <- predict(spClimate,
+                                    newdata = formPredData,
+                                    type = "response")
+}
+```
+
+```{r, echo = FALSE}
+pred <- readRDS("predHMSC.RDS")
+```
+
+```{r, fig.align="center"}
+spPredRaster <- brick(climatePresent, nl = ncol(spDat))
+values(spPredRaster)[-NALoc,] <- pred
+
+plot(spPredRaster[[1]], zlim = c(0,1))
+```
