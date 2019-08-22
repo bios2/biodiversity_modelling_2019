@@ -1,0 +1,128 @@
+---
+title: "Introduction to STManaged"
+date: '`r Sys.Date()`'
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{Introduction to STManaged}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r knitr_opts, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+```
+
+The goal of the `STManaged` package is to wrap the **S**tate and **T**ransition **M**odel for the eastern North American forest extended with forest management practices.
+I will describe here step by step all the functionality of the package from the initialization of the model to plotting outputs.
+
+There will be four steps:
+
+1. initiate the landscape
+2. run the model
+3. plot the output dynamic
+4. animate the output dynamic
+
+```{r, message = FALSE}
+library(STManaged)
+```
+
+## Initiate the landscape
+
+To initiate the landscape let's first define the environmental gradient in which we are going to run the model. A latitudinal gradient will be created using the temperature variation from colder temperature (north) to warmer temperature (south). Annual mean temperature must be between `-5.3` and `12.2` $^\circ$C to respect the parameterization boundary.
+
+```{r}
+temp_gradient <- c(-2.61, 5.07)
+```
+
+The second argument is the size of cells of the landscape, in Km$^2$. We recommend not to exceed the limits of `0.3` to `4` km$^2$. Cells smaller than `0.3` km$^2$ will be time and memory consuming, and cells larger than `4` km$^2$ may overestimate dispersion (*there's a sensitivity analysis for cell size [here](https://github.com/willvieira/STManaged/issues/1)*).
+
+```{r}
+initLand <- create_virtual_landscape(climRange = temp_gradient, cellSize = 0.8)
+```
+
+`initLand` is a list of `r length(initLand)` objects with information about the landscape. `land` informing which forest states is present in each cell, `env1` storing the (scaled) temperature gradient and `nCol` and `nRow` to inform the landscape dimension. The other two objects have information about cells neighbor to be used internally.
+
+```{r}
+str(initLand[1:4])
+```
+Let's take a look in the `initLand` using the function `plot_landscape()`:
+
+```{r,fig.width=10,fig.height=2.5}
+plot_landscape(initLand, Title = 'initial_landscape')
+```
+
+## Run the model
+
+With the initial landscape set, we can now run the model using the function `run_model()`. This function has many arguments, and I will discuss the important ones here.
+First we need to define the number of steps we want the model to run. Note that one step in the model means 5 years of forest dynamics. So let's set the model running for 500 years:
+
+```{r}
+# 500 years
+steps = 100
+```
+
+Now we have to set the forest management practices. We implemented four management practices that aim to favor temperate forest, and therefore increase forest range limits shift northward. (i) Plantation of temperate forest in empty plots present in the boreal region; (ii) harvest of boreal plots; (iii) selective thinning of boreal species present in mixed plots and (iv) enrichment planting of temperate species in boreal plots. The intensity of each management practice varies from `0` to `1`. Here we define an intensity of `0.15` for plantation, which means that 15% of empty plots (regeneration state) will become temperate plots:
+
+```{r}
+# order: plantation, harvest, thinning and enrichment
+managInt <- c(0.15, 0.0, 0.0, 0.0)
+```
+
+The next argument is `RCP`. We define the warming temperature scenario for `4.5` which means an increase of 1.8$^\circ$C for the next 100 years:
+
+```{r}
+RCP = 4.5
+```
+
+By default, the model is stochastic (`stoch = TRUE`) and it will run in only one core (no parallel: `cores = 1`):
+
+```{r,eval=F}
+lands <- run_model(steps = steps,
+                   initLand = initLand,
+                   managInt = managInt,
+                   RCP = RCP)
+```
+
+```{r,echo=F}
+load('data/lands.Rdata')
+```
+
+The model output `lands` is a list of all individual `land` steps and other useful information such as (i) scaled temperature gradient, (ii) steps, (iii) management intensity, (iv) RCP scenario and (v) landscape dimensions.
+
+## Plot output
+
+### Forest state occupancy
+
+First we can plot the occupancy of the forest states over the temperature gradient for one specific time step using the function `plot_occupancy()`. With this function we can see how the state occupancy changed over two or more steps, and an idea of the range limits shift. This function takes the output `lands`, the step we want to plot (note if we plot more than one step, we need to set `mfrow` accordingly) and a smoothing value (`spar`) from `0` (no smooth) to `1`. So let's plot the first and last time step:
+
+```{r,fig.width=5,fig.height=7,fig.align='center'}
+par(mfrow = c(2, 1), cex = 0.9)
+plot_occupancy(lands, step = 0, spar = 0.4)
+plot_occupancy(lands, step = 100, spar = 0.4)
+```
+
+### Range Limit shift
+
+Another possibility is to evaluate how the range limit of forest states changes over time. For that we will use the `range_limit()` function that is integrated in the `plot_rangeShift()` function. The latter needs only the `lands` object and a threshold `rangeLimitOccup` defining the minimum occupancy a row of the landscape that must be occupied by the state to be considered part of the state distribution. This argument calculates the boreal trailing edge and temperate leading edge. The red dotted line shows the moment when the temperature increase due to climate change ends.
+
+```{r,echo=-1,fig.width=5,fig.height=4.8,fig.align='center'}
+par(cex = 0.9)
+plot_rangeShift(lands, rangeLimitOccup = 0.7)
+```
+
+## Animation
+
+Finally, we can animate the spatiotemporal dynamic of the model using the `animate()` function. This function needs the output `lands`, the increment value `stepsBy`, the frames per second `fps` and also the `rangeLimitOccup` argument in case we want to print a line with both the boreal and temperate range limits.
+
+```{r,eval=F}
+animate(lands, stepsBy = 2, fps = 5, gifName = 'plant0.15_RCP4.5', rangeLimitOccup = 0.7)
+```
+
+![](img/plant0.15_RCP4.5.gif)

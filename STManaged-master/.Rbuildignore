@@ -1,0 +1,9 @@
+^codecov\.yml$
+^\.travis\.yml$
+^_pkgdown\.yml$
+^appveyor\.yml$
+^docs$
+^gif$
+^initLandscape$
+^output$
+^simulations$
